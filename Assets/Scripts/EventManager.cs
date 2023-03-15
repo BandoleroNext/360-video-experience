@@ -3,34 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EventManager : MonoBehaviour
+public class EventManager : Singleton<EventManager>
 {
-            
-            #region Singleton
+    public UnityEvent OnSkyboxVideoPause;
+    public UnityEvent OnSkyboxVideoResume;
+    public UnityEvent OnSkyboxVideoCompleted;
     
-            public static EventManager Instance;
-    
-    
-            private void Awake()
-            {
-                if (!Instance)
-                {
-                    Instance = this;
-                    OnSkyboxVideoPause = new UnityEvent();
-                    OnSkyboxVideoResume = new UnityEvent();
-                    OnSkyboxVideoCompleted = new UnityEvent();
-
-                }
-                else if (Instance != this)
-                    Destroy(gameObject);
-    
-                DontDestroyOnLoad(this);
-            }
-    
-            #endregion
-            
-            public UnityEvent OnSkyboxVideoPause;
-            public UnityEvent OnSkyboxVideoResume;
-            public UnityEvent OnSkyboxVideoCompleted;
+    protected override void Awake()
+    {
+        base.Awake();
+        OnSkyboxVideoPause = new UnityEvent();
+        OnSkyboxVideoResume = new UnityEvent();
+        OnSkyboxVideoCompleted = new UnityEvent();
+    }
 }
-
