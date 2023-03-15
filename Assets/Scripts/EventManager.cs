@@ -1,18 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EventManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+            
+            #region Singleton
+    
+            public static EventManager Instance;
+    
+    
+            private void Awake()
+            {
+                if (!Instance)
+                {
+                    Instance = this;
+                    OnSkyboxVideoPause = new UnityEvent();
+                    OnSkyboxVideoResume = new UnityEvent();
+                    OnSkyboxVideoCompleted = new UnityEvent();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+                }
+                else if (Instance != this)
+                    Destroy(gameObject);
+    
+                DontDestroyOnLoad(this);
+            }
+    
+            #endregion
+            
+            public UnityEvent OnSkyboxVideoPause;
+            public UnityEvent OnSkyboxVideoResume;
+            public UnityEvent OnSkyboxVideoCompleted;
 }
+
