@@ -16,7 +16,6 @@ public class SkyboxVideoController : MonoBehaviour
         RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
         _skyboxVideoPlayer = GetComponent<VideoPlayer>();
         _skyboxVideoPlayer.targetTexture = SkyboxRenderTexture;
-        
     }
     
     public SkyboxVideoDescriptor skyboxDescriptor;
@@ -25,17 +24,18 @@ public class SkyboxVideoController : MonoBehaviour
     
     [SerializeField] private RenderTexture SkyboxRenderTexture;
     private static readonly int Exposure = Shader.PropertyToID("_Exposure");
-
-
-
-
+    
+    
     private void Start()
     {
-
-        EventManager.Instance.OnSkyboxVideoResume.AddListener(ResumeVideo);
-        EventManager.Instance.OnSkyboxVideoPause.AddListener(PauseVideo);
-
-
+        EventManager.Instance.OnSkyboxVideoResume.AddListener(VideoResume);
+        EventManager.Instance.OnSkyboxVideoPause.AddListener(VideoPause);
+        EventManager.Instance.OnSkyboxVideoCompleted.AddListener(VideoEnd);
+        VideoStart();
+    }
+    
+    private void VideoStart()
+    {
         //var title = skyboxDescriptor.Title;
         //var description = skyboxDescriptor.Description;
         var url = skyboxDescriptor.Url;
@@ -50,6 +50,21 @@ public class SkyboxVideoController : MonoBehaviour
         }
     }
     
+    private void VideoEnd()
+    {
+        
+    }
+    
+    private void VideoResume()
+    {
+        DoFadeAndCallCallback(1, () => { _skyboxVideoPlayer.Play(); });
+    }
+    
+    private void VideoPause()
+    {
+        DoFadeAndCallCallback(0.4f, () => { _skyboxVideoPlayer.Pause(); });
+    }
+
     private bool CheckVideoUrl(string url)
     {
         Debug.Log($"Searching for the video!");
@@ -63,8 +78,8 @@ public class SkyboxVideoController : MonoBehaviour
             Debug.Log($"Not found in memory, searching on the web");
             if (RemoteFileExists(url))
             {
-               Debug.Log($"Video found!");
-               return true;
+                Debug.Log($"Video found!");
+                return true;
             }
             else
             {
@@ -89,16 +104,6 @@ public class SkyboxVideoController : MonoBehaviour
         {
             return false;
         }
-    }
-    
-    private void ResumeVideo()
-    {
-        DoFadeAndCallCallback(1, () => { _skyboxVideoPlayer.Play(); });
-    }
-    
-    private void PauseVideo()
-    {
-        DoFadeAndCallCallback(1, () => { _skyboxVideoPlayer.Pause(); });
     }
 
     private void DoFadeAndCallCallback(float targetExposure, Action callback)
@@ -132,6 +137,7 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void Update()
     {
+        //Da rimuovere in favore di un debugger esterno
         if (Input.GetKeyDown(KeyCode.H))
         {
             EventManager.Instance.OnSkyboxVideoPause.Invoke();
