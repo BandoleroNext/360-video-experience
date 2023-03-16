@@ -1,38 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Video;
 
 
 public class SkyboxVideoController : MonoBehaviour
 {
-    public SkyboxVideoDescriptor skyboxDescriptor;
-    private VideoPlayer _skyboxController;
+    private void Awake()
+    {
+        RenderSettings.skybox.SetFloat(Exposure, 0f);
+        RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
+        _skyboxVideoPlayer = GetComponent<VideoPlayer>();
+        _skyboxVideoPlayer.targetTexture = SkyboxRenderTexture;
+    }
     
+    public SkyboxVideoDescriptor skyboxDescriptor;
+    private VideoPlayer _skyboxVideoPlayer;
+    
+    
+    [SerializeField] private RenderTexture SkyboxRenderTexture;
+    private static readonly int Exposure = Shader.PropertyToID("_Exposure");
+
 
 
 
     private void Start()
     {
+
+        EventManager.Instance.OnSkyboxVideoResume.AddListener(ResumeVideo);
+        EventManager.Instance.OnSkyboxVideoPause.AddListener(PauseVideo);
+
+
         var title = skyboxDescriptor.Title;
         var description = skyboxDescriptor.Description;
         var url = skyboxDescriptor.Url;
         if (CheckVideoUrl(url))
         {
-            Debug.Log($"Url exist");
+            
         }
         else
         {
             Debug.Log($"Url non existent or not found");
         }
     }
-
-
-
-
-
+    
     private bool CheckVideoUrl(string url)
     {
         Debug.Log($"Searching for the video!");
@@ -73,5 +88,22 @@ public class SkyboxVideoController : MonoBehaviour
         {
             return false;
         }
+    }
+    
+    private void ResumeVideo()
+    {
+        DoFadeAndCallCallback(1, () => { _skyboxVideoPlayer.Play(); });
+    }
+    
+    private void PauseVideo()
+    {
+        DoFadeAndCallCallback(1, () => { _skyboxVideoPlayer.Pause(); });
+    }
+    
+    public void DoFadeAndCallCallback(float targetExposure, Action callback)
+    {
+        DOTween.To(() => RenderSettings.skybox.GetFloat(Exposure),
+                (value) => RenderSettings.skybox.SetFloat(Exposure, value), targetExposure, 0.2f)
+            .OnComplete(() => callback());
     }
 }
