@@ -16,6 +16,7 @@ public class SkyboxVideoController : MonoBehaviour
         RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
         _skyboxVideoPlayer = GetComponent<VideoPlayer>();
         _skyboxVideoPlayer.targetTexture = SkyboxRenderTexture;
+        
     }
     
     public SkyboxVideoDescriptor skyboxDescriptor;
@@ -35,12 +36,13 @@ public class SkyboxVideoController : MonoBehaviour
         EventManager.Instance.OnSkyboxVideoPause.AddListener(PauseVideo);
 
 
-        var title = skyboxDescriptor.Title;
-        var description = skyboxDescriptor.Description;
+        //var title = skyboxDescriptor.Title;
+        //var description = skyboxDescriptor.Description;
         var url = skyboxDescriptor.Url;
         if (CheckVideoUrl(url))
         {
-            
+            PrepareAndStartVideoPlayback(url);
+            EventManager.Instance.OnSkyboxVideoResume.Invoke(); 
         }
         else
         {
@@ -99,11 +101,38 @@ public class SkyboxVideoController : MonoBehaviour
     {
         DoFadeAndCallCallback(1, () => { _skyboxVideoPlayer.Pause(); });
     }
-    
-    public void DoFadeAndCallCallback(float targetExposure, Action callback)
+
+    private void DoFadeAndCallCallback(float targetExposure, Action callback)
     {
         DOTween.To(() => RenderSettings.skybox.GetFloat(Exposure),
                 (value) => RenderSettings.skybox.SetFloat(Exposure, value), targetExposure, 0.2f)
             .OnComplete(() => callback());
+    }   
+    
+    private void PrepareAndStartVideoPlayback(string videoUrl)
+    {
+        _skyboxVideoPlayer.url = videoUrl;
+
+        if (!_skyboxVideoPlayer.isPrepared)
+        {
+            Debug.Log("TO PREPARE!");
+            _skyboxVideoPlayer.prepareCompleted += VideoPlayerOnPrepareCompleted;
+            _skyboxVideoPlayer.Prepare();
+        }
+        else
+        {
+            VideoPlayerOnPrepareCompleted(_skyboxVideoPlayer);
+        }
+    }
+    
+    private void VideoPlayerOnPrepareCompleted(VideoPlayer source)
+    {
+        Debug.Log("READY");
+        Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
+    }
+    
+    private void OnDestroy()
+    {
+        RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
     }
 }
