@@ -8,18 +8,25 @@ using UnityEngine.Video;
 
 public class SkyboxVideoController : MonoBehaviour
 {
-    public SkyboxVideoDescriptor skyboxdescriptor;
-    private VideoPlayer skyboxcontroller;
+    public SkyboxVideoDescriptor skyboxDescriptor;
+    private VideoPlayer _skyboxController;
     
 
 
 
     private void Start()
     {
-        var title = skyboxdescriptor.Title;
-        var description = skyboxdescriptor.Description;
-        var url = skyboxdescriptor.Url;
-        
+        var title = skyboxDescriptor.Title;
+        var description = skyboxDescriptor.Description;
+        var url = skyboxDescriptor.Url;
+        if (CheckVideoUrl(url))
+        {
+            Debug.Log($"Url exist");
+        }
+        else
+        {
+            Debug.Log($"Url non existent or not found");
+        }
     }
 
 
