@@ -42,7 +42,7 @@ public class SkyboxVideoController : MonoBehaviour
         if (CheckVideoUrl(url))
         {
             PrepareAndStartVideoPlayback(url);
-            EventManager.Instance.OnSkyboxVideoResume.Invoke(); 
+            EventManager.Instance.OnSkyboxVideoResume.Invoke();
         }
         else
         {
@@ -78,10 +78,9 @@ public class SkyboxVideoController : MonoBehaviour
     {
         try
         {
-            //Creating the HttpWebRequest
+            //Searching through an HttpWebRequest
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "HEAD";
-            //Getting the Web Response.
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             response.Close();
             return (response.StatusCode == HttpStatusCode.OK);
@@ -130,7 +129,21 @@ public class SkyboxVideoController : MonoBehaviour
         Debug.Log("READY");
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            EventManager.Instance.OnSkyboxVideoPause.Invoke();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            EventManager.Instance.OnSkyboxVideoResume.Invoke();
+        }
+    }
     
+
     private void OnDestroy()
     {
         RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
