@@ -66,6 +66,7 @@ public class SkyboxVideoController : MonoBehaviour
         {
             name = title
         };
+        //SkyboxRenderTexture = new RenderTexture((int)_skyboxVideoPlayer.width,(int)_skyboxVideoPlayer.height,16, RenderTextureFormat.ARGB32);
         RenderSettings.skybox = skyboxMaterial;
         RenderSettings.skybox.SetFloat(Exposure, 0f);
         RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
