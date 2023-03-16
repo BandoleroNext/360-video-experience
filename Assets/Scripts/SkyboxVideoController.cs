@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Video;
@@ -10,14 +11,6 @@ using UnityEngine.Video;
 
 public class SkyboxVideoController : MonoBehaviour
 {
-    private void Awake()
-    {
-        RenderSettings.skybox.SetFloat(Exposure, 0f);
-        RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
-        _skyboxVideoPlayer = GetComponent<VideoPlayer>();
-        _skyboxVideoPlayer.targetTexture = SkyboxRenderTexture;
-    }
-    
     public SkyboxVideoDescriptor skyboxDescriptor;
     private VideoPlayer _skyboxVideoPlayer;
     
@@ -36,9 +29,11 @@ public class SkyboxVideoController : MonoBehaviour
     
     private void VideoStart()
     {
-        //var title = skyboxDescriptor.Title;
-        //var description = skyboxDescriptor.Description;
+        var title = skyboxDescriptor.Title;
         var url = skyboxDescriptor.Url;
+        
+        CreateSkybox(title);
+        
         if (CheckVideoUrl(url))
         {
             PrepareAndStartVideoPlayback(url);
@@ -63,6 +58,19 @@ public class SkyboxVideoController : MonoBehaviour
     private void VideoPause()
     {
         DoFadeAndCallCallback(0.4f, () => { _skyboxVideoPlayer.Pause(); });
+    }
+    
+    private void CreateSkybox(string title)
+    {
+        var skyboxMaterial = new Material(Shader.Find("Skybox/Panoramic"))
+        {
+            name = title
+        };
+        RenderSettings.skybox = skyboxMaterial;
+        RenderSettings.skybox.SetFloat(Exposure, 0f);
+        RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
+        _skyboxVideoPlayer = GetComponent<VideoPlayer>();
+        _skyboxVideoPlayer.targetTexture = SkyboxRenderTexture;
     }
 
     private bool CheckVideoUrl(string url)
