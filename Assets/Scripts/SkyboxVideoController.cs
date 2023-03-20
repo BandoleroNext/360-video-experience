@@ -13,6 +13,17 @@ using UnityEngine.Video;
 public class SkyboxVideoController : MonoBehaviour
 {
     public SkyboxVideoDescriptor skyboxDescriptor;
+
+    public enum VideoResolution
+    {
+        _2K, 
+        _4K, 
+        _8K, 
+    };
+
+    public VideoResolution resolution;
+
+
     public float fadeResume = 1;
     public float fadePause = 0.4f;
     private VideoPlayer _skyboxVideoPlayer;
@@ -82,7 +93,20 @@ public class SkyboxVideoController : MonoBehaviour
         {
             name = title
         };
-        skyboxRenderTexture = new RenderTexture(8192,4096,32, RenderTextureFormat.ARGB32);
+        
+        switch (resolution)
+        {
+            case VideoResolution._2K:
+                skyboxRenderTexture = new RenderTexture(2048,1080,32, RenderTextureFormat.ARGB32);
+                break;
+            case VideoResolution._4K:
+                skyboxRenderTexture = new RenderTexture(3840,2160,32, RenderTextureFormat.ARGB32);
+                break;
+            case VideoResolution._8K:
+                skyboxRenderTexture = new RenderTexture(7680,4320,32, RenderTextureFormat.ARGB32);
+                break;
+        }
+        
         RenderSettings.skybox = skyboxMaterial;
         RenderSettings.skybox.SetFloat(Exposure, 0f);
         RenderSettings.skybox.mainTexture = skyboxRenderTexture;
