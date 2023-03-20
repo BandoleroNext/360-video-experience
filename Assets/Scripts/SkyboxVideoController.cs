@@ -160,6 +160,7 @@ public class SkyboxVideoController : MonoBehaviour
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
         //Da rimuovere in favore di un debugger esterno
@@ -179,4 +180,5 @@ public class SkyboxVideoController : MonoBehaviour
     {
         RenderSettings.skybox.mainTexture = skyboxRenderTexture;
     }
+#endif
 }
