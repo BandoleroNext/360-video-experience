@@ -16,7 +16,7 @@ public class SkyboxVideoController : MonoBehaviour
     private VideoPlayer _skyboxVideoPlayer;
 
 
-    [SerializeField] private RenderTexture skyboxRenderTexture;
+    private RenderTexture skyboxRenderTexture;
     private static readonly int Exposure = Shader.PropertyToID("_Exposure");
 
 
@@ -34,10 +34,9 @@ public class SkyboxVideoController : MonoBehaviour
         var url = skyboxDescriptor.Url;
         url = CheckForDemoVideo(url);
 
-        CreateSkybox(title);
-        
         if (CheckVideoUrl(url))
         {
+            CreateSkybox(title);
             PrepareAndStartVideoPlayback(url);
             EventManager.Instance.OnSkyboxVideoResume.Invoke();
         }
@@ -81,7 +80,7 @@ public class SkyboxVideoController : MonoBehaviour
         {
             name = title
         };
-        //SkyboxRenderTexture = new RenderTexture((int)_skyboxVideoPlayer.width,(int)_skyboxVideoPlayer.height,16, RenderTextureFormat.ARGB32);
+        skyboxRenderTexture = new RenderTexture(8192,4096,32, RenderTextureFormat.ARGB32);
         RenderSettings.skybox = skyboxMaterial;
         RenderSettings.skybox.SetFloat(Exposure, 0f);
         RenderSettings.skybox.mainTexture = skyboxRenderTexture;
