@@ -6,6 +6,7 @@ using System.Net;
 using System.Reflection;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Video;
 
 
@@ -15,7 +16,7 @@ public class SkyboxVideoController : MonoBehaviour
     private VideoPlayer _skyboxVideoPlayer;
     
     
-    [SerializeField] private RenderTexture SkyboxRenderTexture;
+    [SerializeField] private RenderTexture skyboxRenderTexture;
     private static readonly int Exposure = Shader.PropertyToID("_Exposure");
     
     
@@ -69,9 +70,9 @@ public class SkyboxVideoController : MonoBehaviour
         //SkyboxRenderTexture = new RenderTexture((int)_skyboxVideoPlayer.width,(int)_skyboxVideoPlayer.height,16, RenderTextureFormat.ARGB32);
         RenderSettings.skybox = skyboxMaterial;
         RenderSettings.skybox.SetFloat(Exposure, 0f);
-        RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
+        RenderSettings.skybox.mainTexture = skyboxRenderTexture;
         _skyboxVideoPlayer = GetComponent<VideoPlayer>();
-        _skyboxVideoPlayer.targetTexture = SkyboxRenderTexture;
+        _skyboxVideoPlayer.targetTexture = skyboxRenderTexture;
     }
 
     private bool CheckVideoUrl(string url)
@@ -161,6 +162,6 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void OnDestroy()
     {
-        RenderSettings.skybox.mainTexture = SkyboxRenderTexture;
+        RenderSettings.skybox.mainTexture = skyboxRenderTexture;
     }
 }
