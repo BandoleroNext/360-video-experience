@@ -9,35 +9,26 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Video;
 
-
+[RequireComponent(typeof(VideoPlayer))]
 public class SkyboxVideoController : MonoBehaviour
 {
     public SkyboxVideoDescriptor skyboxDescriptor;
-
-    public enum VideoResolution
-    {
-        _2K, 
-        _4K, 
-        _8K, 
-    };
-
-    public VideoResolution resolution;
-
+    [SerializeField] private int renderTextureWidth = 4096;
+    [SerializeField] private int renderTextureHeight = 2048;
 
     public float fadeResume = 1;
     public float fadePause = 0.4f;
     private VideoPlayer _skyboxVideoPlayer;
 
 
-    private RenderTexture skyboxRenderTexture;
-    private static readonly int Exposure = Shader.PropertyToID("_Exposure");
+    private RenderTexture _skyboxRenderTexture;
+    private static readonly int _exposure = Shader.PropertyToID("_Exposure");
 
 
     private void Start()
     {
         EventManager.Instance.OnSkyboxVideoResume.AddListener(VideoResume);
         EventManager.Instance.OnSkyboxVideoPause.AddListener(VideoPause);
-        EventManager.Instance.OnSkyboxVideoCompleted.AddListener(VideoEnd);
         VideoStart();
     }
 
@@ -58,11 +49,6 @@ public class SkyboxVideoController : MonoBehaviour
         {
             Debug.Log($"Url non existent or not found");
         }
-    }
-
-    private void VideoEnd()
-    {
-        Debug.Log("Video has ended");
     }
 
     private void VideoResume()
@@ -95,25 +81,13 @@ public class SkyboxVideoController : MonoBehaviour
         {
             name = title
         };
-        
-        switch (resolution)
-        {
-            case VideoResolution._2K:
-                skyboxRenderTexture = new RenderTexture(2048,1080,32, RenderTextureFormat.ARGB32);
-                break;
-            case VideoResolution._4K:
-                skyboxRenderTexture = new RenderTexture(3840,2160,32, RenderTextureFormat.ARGB32);
-                break;
-            case VideoResolution._8K:
-                skyboxRenderTexture = new RenderTexture(7680,4320,32, RenderTextureFormat.ARGB32);
-                break;
-        }
-        
+        _skyboxRenderTexture = new RenderTexture(renderTextureWidth,renderTextureHeight,32, RenderTextureFormat.ARGB32);
+
         RenderSettings.skybox = skyboxMaterial;
-        RenderSettings.skybox.SetFloat(Exposure, 0f);
-        RenderSettings.skybox.mainTexture = skyboxRenderTexture;
+        RenderSettings.skybox.SetFloat(_exposure, 0f);
+        RenderSettings.skybox.mainTexture = _skyboxRenderTexture;
         _skyboxVideoPlayer = GetComponent<VideoPlayer>();
-        _skyboxVideoPlayer.targetTexture = skyboxRenderTexture;
+        _skyboxVideoPlayer.targetTexture = _skyboxRenderTexture;
     }
 
     private bool CheckVideoUrl(string url)
@@ -145,9 +119,9 @@ public class SkyboxVideoController : MonoBehaviour
         try
         {
             //Searching through an HttpWebRequest
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            if (WebRequest.Create(url) is not HttpWebRequest request) return false;
             request.Method = "HEAD";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            if (request.GetResponse() is not HttpWebResponse response) return false;
             response.Close();
             return (response.StatusCode == HttpStatusCode.OK);
         }
@@ -161,8 +135,8 @@ public class SkyboxVideoController : MonoBehaviour
     private void DoFadeAndCallCallback(float targetExposure, Action callback)
     {
         const float duration = 0.2f;
-        DOTween.To(() => RenderSettings.skybox.GetFloat(Exposure),
-                (value) => RenderSettings.skybox.SetFloat(Exposure, value), targetExposure, duration)
+        DOTween.To(() => RenderSettings.skybox.GetFloat(_exposure),
+                (value) => RenderSettings.skybox.SetFloat(_exposure, value), targetExposure, duration)
             .OnComplete(() => callback());
     }
 
@@ -190,7 +164,11 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void VideoCompleted(VideoPlayer vp)
     {
-        EventManager.Instance.OnSkyboxVideoCompleted.Invoke();
+        Debug.Log("Video has ended");
+        DoFadeAndCallCallback(0, () =>
+        {
+            EventManager.Instance.OnSkyboxVideoCompleted.Invoke();
+        });
     }
 
 #if UNITY_EDITOR
