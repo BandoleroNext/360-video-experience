@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class DebugInteraction : MonoBehaviour
 {
-
-    // Update is called once per frame
+    
 #if UNITY_EDITOR
     private void Update()
     {
