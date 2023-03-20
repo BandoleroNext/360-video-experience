@@ -357,6 +357,10 @@ PrefabInstance:
       value: Sky Box Video Controller
       objectReference: {fileID: 0}
     - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: resolution
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
       propertyPath: skyboxRenderTexture
       value: 
       objectReference: {fileID: 8400000, guid: bbeaf2f082239114ea0c2eefa970df76, type: 2}
