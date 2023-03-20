@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Example
   Description: with description
-  Url: C:\UnityProjects\360-video-experience\Assets\Videos\DemoVideo.mp4
+  Url: DemoVideo.mp4

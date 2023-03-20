@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skyboxDescriptor: {fileID: 11400000, guid: 3cd1ecb9c7319fa43a6200ea5708e13f, type: 2}
-  SkyboxRenderTexture: {fileID: 8400000, guid: 021ef7acbe6fce74bb694cc1cae94434, type: 2}
+  skyboxRenderTexture: {fileID: 8400000, guid: 328fc59cf8c4165499b2c22c8944da56, type: 2}
 --- !u!328 &2348709183166521265
 VideoPlayer:
   m_ObjectHideFlags: 0

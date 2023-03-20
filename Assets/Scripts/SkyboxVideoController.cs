@@ -14,12 +14,12 @@ public class SkyboxVideoController : MonoBehaviour
 {
     public SkyboxVideoDescriptor skyboxDescriptor;
     private VideoPlayer _skyboxVideoPlayer;
-    
-    
+
+
     [SerializeField] private RenderTexture skyboxRenderTexture;
     private static readonly int Exposure = Shader.PropertyToID("_Exposure");
-    
-    
+
+
     private void Start()
     {
         EventManager.Instance.OnSkyboxVideoResume.AddListener(VideoResume);
@@ -27,12 +27,13 @@ public class SkyboxVideoController : MonoBehaviour
         EventManager.Instance.OnSkyboxVideoCompleted.AddListener(VideoEnd);
         VideoStart();
     }
-    
+
     private void VideoStart()
     {
         var title = skyboxDescriptor.Title;
         var url = skyboxDescriptor.Url;
-        
+        url = CheckForDemoVideo(url);
+
         CreateSkybox(title);
         
         if (CheckVideoUrl(url))
@@ -45,22 +46,35 @@ public class SkyboxVideoController : MonoBehaviour
             Debug.Log($"Url non existent or not found");
         }
     }
-    
+
     private void VideoEnd()
     {
-        
     }
-    
+
     private void VideoResume()
     {
         DoFadeAndCallCallback(1, () => { _skyboxVideoPlayer.Play(); });
     }
-    
+
     private void VideoPause()
     {
         DoFadeAndCallCallback(0.4f, () => { _skyboxVideoPlayer.Pause(); });
     }
-    
+
+    private string CheckForDemoVideo(string url)
+    {
+        if (url == "DemoVideo.mp4")
+        {
+            Debug.Log($"Loading up demo video!");
+            url = Application.dataPath + "/Videos/DemoVideo.mp4";
+            return url;
+        }
+        else
+        {
+            return url;
+        }
+    }
+
     private void CreateSkybox(string title)
     {
         var skyboxMaterial = new Material(Shader.Find("Skybox/Panoramic"))
@@ -78,7 +92,7 @@ public class SkyboxVideoController : MonoBehaviour
     private bool CheckVideoUrl(string url)
     {
         Debug.Log($"Searching for the video!");
-        
+
         if (System.IO.File.Exists(url))
         {
             return true;
@@ -93,12 +107,12 @@ public class SkyboxVideoController : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Video not found!");
+                Debug.LogError($"Video not found!");
                 return false;
             }
         }
     }
-    
+
     private static bool RemoteFileExists(string url)
     {
         try
@@ -112,6 +126,7 @@ public class SkyboxVideoController : MonoBehaviour
         }
         catch
         {
+            Debug.LogError($"Video not found!");
             return false;
         }
     }
@@ -121,8 +136,8 @@ public class SkyboxVideoController : MonoBehaviour
         DOTween.To(() => RenderSettings.skybox.GetFloat(Exposure),
                 (value) => RenderSettings.skybox.SetFloat(Exposure, value), targetExposure, 0.2f)
             .OnComplete(() => callback());
-    }   
-    
+    }
+
     private void PrepareAndStartVideoPlayback(string videoUrl)
     {
         _skyboxVideoPlayer.url = videoUrl;
@@ -138,7 +153,7 @@ public class SkyboxVideoController : MonoBehaviour
             VideoPlayerOnPrepareCompleted(_skyboxVideoPlayer);
         }
     }
-    
+
     private void VideoPlayerOnPrepareCompleted(VideoPlayer source)
     {
         Debug.Log("READY");
@@ -152,13 +167,13 @@ public class SkyboxVideoController : MonoBehaviour
         {
             EventManager.Instance.OnSkyboxVideoPause.Invoke();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             EventManager.Instance.OnSkyboxVideoResume.Invoke();
         }
     }
-    
+
 
     private void OnDestroy()
     {
