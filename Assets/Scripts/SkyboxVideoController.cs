@@ -174,11 +174,6 @@ public class SkyboxVideoController : MonoBehaviour
             EventManager.Instance.OnSkyboxVideoResume.Invoke();
         }
     }
-
-
-    private void OnDestroy()
-    {
-        RenderSettings.skybox.mainTexture = skyboxRenderTexture;
-    }
+    
 #endif
 }
