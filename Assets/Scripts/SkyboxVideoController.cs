@@ -13,6 +13,8 @@ using UnityEngine.Video;
 public class SkyboxVideoController : MonoBehaviour
 {
     public SkyboxVideoDescriptor skyboxDescriptor;
+    public float fadeResume = 1;
+    public float fadePause = 0.4f;
     private VideoPlayer _skyboxVideoPlayer;
 
 
@@ -52,12 +54,12 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void VideoResume()
     {
-        DoFadeAndCallCallback(skyboxDescriptor.FadeResume, () => { _skyboxVideoPlayer.Play(); });
+        DoFadeAndCallCallback(fadeResume, () => { _skyboxVideoPlayer.Play(); });
     }
 
     private void VideoPause()
     {
-        DoFadeAndCallCallback(skyboxDescriptor.FadePause, () => { _skyboxVideoPlayer.Pause(); });
+        DoFadeAndCallCallback(fadePause, () => { _skyboxVideoPlayer.Pause(); });
     }
 
     private string CheckForDemoVideo(string url)
