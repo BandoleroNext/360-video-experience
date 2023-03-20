@@ -52,6 +52,7 @@ public class SkyboxVideoController : MonoBehaviour
             CreateSkybox(title);
             PrepareAndStartVideoPlayback(url);
             EventManager.Instance.OnSkyboxVideoResume.Invoke();
+            _skyboxVideoPlayer.loopPointReached += VideoCompleted;
         }
         else
         {
@@ -61,6 +62,7 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void VideoEnd()
     {
+        Debug.Log("Video has ended");
     }
 
     private void VideoResume()
@@ -184,6 +186,11 @@ public class SkyboxVideoController : MonoBehaviour
     {
         Debug.Log("READY");
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
+    }
+
+    private void VideoCompleted(VideoPlayer vp)
+    {
+        EventManager.Instance.OnSkyboxVideoCompleted.Invoke();
     }
 
 #if UNITY_EDITOR
