@@ -15,3 +15,5 @@ MonoBehaviour:
   Title: Example
   Description: with description
   Url: DemoVideo.mp4
+  FadeResume: 1
+  FadePause: 0.4

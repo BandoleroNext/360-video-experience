@@ -8,4 +8,6 @@ public class SkyboxVideoDescriptor : ScriptableObject
     public string Title = "";
     public string Description = "";
     public string Url = "";
+    public float FadeResume = 1;
+    public float FadePause = 0.4f;
 }
