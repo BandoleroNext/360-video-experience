@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f5d7296b0368a4abea3f4832e6b68c, type: 3}
   m_Name: DescriptorExample
   m_EditorClassIdentifier: 
-  Title: 
-  Description: 
-  Url: 
+  Title: Example
+  Description: with description
+  Url: DemoVideo.mp4
+  FadeResume: 1
+  FadePause: 0.4
