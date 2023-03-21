@@ -169,21 +169,4 @@ public class SkyboxVideoController : MonoBehaviour
             EventManager.Instance.OnSkyboxVideoCompleted.Invoke();
         });
     }
-
-#if UNITY_EDITOR
-    private void Update()
-    {
-        //Da rimuovere in favore di un debugger esterno
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            EventManager.Instance.OnSkyboxVideoPause.Invoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            EventManager.Instance.OnSkyboxVideoResume.Invoke();
-        }
-    }
-    
-#endif
 }
