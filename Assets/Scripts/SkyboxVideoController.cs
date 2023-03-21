@@ -9,36 +9,40 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Video;
 
-
+[RequireComponent(typeof(VideoPlayer))]
 public class SkyboxVideoController : MonoBehaviour
 {
     public SkyboxVideoDescriptor skyboxDescriptor;
+    [SerializeField] private int renderTextureWidth = 4096;
+    [SerializeField] private int renderTextureHeight = 2048;
+
+    public float fadeResume = 1;
+    public float fadePause = 0.4f;
     private VideoPlayer _skyboxVideoPlayer;
 
 
-    private RenderTexture skyboxRenderTexture;
-    private static readonly int Exposure = Shader.PropertyToID("_Exposure");
+    private RenderTexture _skyboxRenderTexture;
+    private static readonly int _exposure = Shader.PropertyToID("_Exposure");
 
 
     private void Start()
     {
         EventManager.Instance.OnSkyboxVideoResume.AddListener(VideoResume);
         EventManager.Instance.OnSkyboxVideoPause.AddListener(VideoPause);
-        EventManager.Instance.OnSkyboxVideoCompleted.AddListener(VideoEnd);
         VideoStart();
     }
 
     private void VideoStart()
     {
         var title = skyboxDescriptor.Title;
-        var url = skyboxDescriptor.Url;
-        url = CheckForDemoVideo(url);
+        var url = CheckForDemoVideo(skyboxDescriptor.Url);
 
         if (CheckVideoUrl(url))
         {
             CreateSkybox(title);
             PrepareAndStartVideoPlayback(url);
             EventManager.Instance.OnSkyboxVideoResume.Invoke();
+            _skyboxVideoPlayer.loopPointReached += VideoCompleted;
         }
         else
         {
@@ -46,18 +50,14 @@ public class SkyboxVideoController : MonoBehaviour
         }
     }
 
-    private void VideoEnd()
-    {
-    }
-
     private void VideoResume()
     {
-        DoFadeAndCallCallback(skyboxDescriptor.FadeResume, () => { _skyboxVideoPlayer.Play(); });
+        DoFadeAndCallCallback(fadeResume, () => { _skyboxVideoPlayer.Play(); });
     }
 
     private void VideoPause()
     {
-        DoFadeAndCallCallback(skyboxDescriptor.FadePause, () => { _skyboxVideoPlayer.Pause(); });
+        DoFadeAndCallCallback(fadePause, () => { _skyboxVideoPlayer.Pause(); });
     }
 
     private string CheckForDemoVideo(string url)
@@ -80,12 +80,13 @@ public class SkyboxVideoController : MonoBehaviour
         {
             name = title
         };
-        skyboxRenderTexture = new RenderTexture(8192,4096,32, RenderTextureFormat.ARGB32);
+        _skyboxRenderTexture = new RenderTexture(renderTextureWidth,renderTextureHeight,32, RenderTextureFormat.ARGB32);
+
         RenderSettings.skybox = skyboxMaterial;
-        RenderSettings.skybox.SetFloat(Exposure, 0f);
-        RenderSettings.skybox.mainTexture = skyboxRenderTexture;
+        RenderSettings.skybox.SetFloat(_exposure, 0f);
+        RenderSettings.skybox.mainTexture = _skyboxRenderTexture;
         _skyboxVideoPlayer = GetComponent<VideoPlayer>();
-        _skyboxVideoPlayer.targetTexture = skyboxRenderTexture;
+        _skyboxVideoPlayer.targetTexture = _skyboxRenderTexture;
     }
 
     private bool CheckVideoUrl(string url)
@@ -117,9 +118,9 @@ public class SkyboxVideoController : MonoBehaviour
         try
         {
             //Searching through an HttpWebRequest
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            if (WebRequest.Create(url) is not HttpWebRequest request) return false;
             request.Method = "HEAD";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            if (request.GetResponse() is not HttpWebResponse response) return false;
             response.Close();
             return (response.StatusCode == HttpStatusCode.OK);
         }
@@ -133,8 +134,8 @@ public class SkyboxVideoController : MonoBehaviour
     private void DoFadeAndCallCallback(float targetExposure, Action callback)
     {
         const float duration = 0.2f;
-        DOTween.To(() => RenderSettings.skybox.GetFloat(Exposure),
-                (value) => RenderSettings.skybox.SetFloat(Exposure, value), targetExposure, duration)
+        DOTween.To(() => RenderSettings.skybox.GetFloat(_exposure),
+                (value) => RenderSettings.skybox.SetFloat(_exposure, value), targetExposure, duration)
             .OnComplete(() => callback());
     }
 
@@ -159,10 +160,13 @@ public class SkyboxVideoController : MonoBehaviour
         Debug.Log("READY");
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
     }
-    
-    private void OnDestroy()
-    {
-        RenderSettings.skybox.mainTexture = skyboxRenderTexture;
-    }
 
+    private void VideoCompleted(VideoPlayer vp)
+    {
+        Debug.Log("Video has ended");
+        DoFadeAndCallCallback(0, () =>
+        {
+            EventManager.Instance.OnSkyboxVideoCompleted.Invoke();
+        });
+    }
 }
