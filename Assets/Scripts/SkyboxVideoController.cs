@@ -34,8 +34,8 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void VideoStart()
     {
-        var title = skyboxDescriptor.Title;
-        var url = CheckForDemoVideo(skyboxDescriptor.Url);
+        var title = skyboxDescriptor.title;
+        var url = CheckForDemoVideo(skyboxDescriptor.url);
 
         if (CheckVideoUrl(url))
         {
