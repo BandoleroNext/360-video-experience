@@ -131,7 +131,7 @@ public class SkyboxVideoController : MonoBehaviour
         }
     }
 
-    private void DoFadeAndCallCallback(float targetExposure, Action callback)
+    public static void DoFadeAndCallCallback(float targetExposure, Action callback)
     {
         const float duration = 0.2f;
         DOTween.To(() => RenderSettings.skybox.GetFloat(_exposure),

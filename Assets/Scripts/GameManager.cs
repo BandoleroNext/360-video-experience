@@ -2,24 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
 
-    private void Start()
-    {
-        
-    }
-
     public void ChangeScene(int index)
     {
-        
+        StartCoroutine(Changing_CoroutineInd(index));
     }
 
-    private static void ChangeScene(string videoName)
+    public void ChangeScene(string videoName)
     {
-        
+        StartCoroutine(Changing_CoroutineName(videoName)); 
     }
+
+    private static IEnumerator Changing_CoroutineInd(int index)
+    {
+        yield return null;
+        SkyboxVideoController.DoFadeAndCallCallback(0, () =>
+        {
+            SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
+        });
+    }
+    
+    private static IEnumerator Changing_CoroutineName(string videoName)
+    {
+        yield return null;
+        SkyboxVideoController.DoFadeAndCallCallback(0, () =>
+        {
+            SceneManager.LoadSceneAsync(videoName, LoadSceneMode.Single);
+        });
+    }
+
+
 
 #if UNITY_EDITOR
     private void Update()
@@ -27,7 +43,7 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.R))
         {
             Debug.Log("Going to Video Scene");
-            GameManager.ChangeScene("Video");
+            ChangeScene("SceneForTestChange");
         }
 
         if (Input.GetKeyDown(KeyCode.T))
