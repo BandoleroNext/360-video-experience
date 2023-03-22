@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using DG.Tweening;
@@ -154,11 +155,11 @@ public class SkyboxVideoController : MonoBehaviour
             VideoPlayerOnPrepareCompleted(_skyboxVideoPlayer);
         }
     }
-
     private void VideoPlayerOnPrepareCompleted(VideoPlayer source)
     {
         Debug.Log("READY");
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
+        var interruptionController = new InterruptionController(skyboxDescriptor.interruptions,source);
     }
 
     private void VideoCompleted(VideoPlayer vp)
