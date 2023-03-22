@@ -27,8 +27,8 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.OnSkyboxVideoResume.AddListener(VideoResume);
-        EventManager.Instance.OnSkyboxVideoPause.AddListener(VideoPause);
+        EventManager.Instance.onSkyboxVideoResume.AddListener(VideoResume);
+        EventManager.Instance.onSkyboxVideoPause.AddListener(VideoPause);
         VideoStart();
     }
 
@@ -41,7 +41,7 @@ public class SkyboxVideoController : MonoBehaviour
         {
             CreateSkybox(title);
             PrepareAndStartVideoPlayback(url);
-            EventManager.Instance.OnSkyboxVideoResume.Invoke();
+            EventManager.Instance.onSkyboxVideoResume.Invoke();
             _skyboxVideoPlayer.loopPointReached += VideoCompleted;
         }
         else
@@ -166,7 +166,7 @@ public class SkyboxVideoController : MonoBehaviour
         Debug.Log("Video has ended");
         DoFadeAndCallCallback(0, () =>
         {
-            EventManager.Instance.OnSkyboxVideoCompleted.Invoke();
+            EventManager.Instance.onSkyboxVideoCompleted.Invoke();
         });
     }
 }
