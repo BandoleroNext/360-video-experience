@@ -6,18 +6,12 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
 
-    public enum IndexOrName
-    {
-        Index,
-        Name
-    }
-
     private void Start()
     {
         
     }
 
-    private static void ChangeScene(int index)
+    public void ChangeScene(int index)
     {
         
     }
@@ -39,7 +33,7 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.T))
         {
             Debug.Log("Going to Menu Scene");
-            GameManager.ChangeScene(1);
+            ChangeScene(1);
         }
     }
 #endif
