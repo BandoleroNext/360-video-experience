@@ -13,6 +13,7 @@ public class SkyboxVideoController : MonoBehaviour
 
     public float fadeResume = 1;
     public float fadePause = 0.4f;
+    public float fadeTime = 0.2f;
     private VideoPlayer _skyboxVideoPlayer;
 
 
@@ -47,12 +48,12 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void VideoResume()
     {
-        DoFadeAndCallCallback(fadeResume, () => { _skyboxVideoPlayer.Play(); });
+        DoFadeAndCallCallback(fadeResume, () => { _skyboxVideoPlayer.Play(); },fadeTime);
     }
 
     private void VideoPause()
     {
-        DoFadeAndCallCallback(fadePause, () => { _skyboxVideoPlayer.Pause(); });
+        DoFadeAndCallCallback(fadePause, () => { _skyboxVideoPlayer.Pause(); },fadeTime);
     }
 
     private string CheckForDemoVideo(string url)
@@ -126,11 +127,10 @@ public class SkyboxVideoController : MonoBehaviour
         }
     }
 
-    private void DoFadeAndCallCallback(float targetExposure, Action callback)
+    public static void DoFadeAndCallCallback(float targetExposure, Action callback, float fadeTime)
     {
-        const float duration = 0.2f;
         DOTween.To(() => RenderSettings.skybox.GetFloat(_exposure),
-                (value) => RenderSettings.skybox.SetFloat(_exposure, value), targetExposure, duration)
+                (value) => RenderSettings.skybox.SetFloat(_exposure, value), targetExposure, fadeTime)
             .OnComplete(() => callback());
     }
 
@@ -162,6 +162,6 @@ public class SkyboxVideoController : MonoBehaviour
         DoFadeAndCallCallback(0, () =>
         {
             EventManager.Instance.onVideoCompleted.Invoke();
-        });
+        }, fadeTime);
     }
 }
