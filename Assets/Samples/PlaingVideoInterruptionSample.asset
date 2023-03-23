@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: PlaingVideoInterruptionSample
   m_EditorClassIdentifier: 
   interruptAtPercentage: 50
-  title: Sample Test
-  description: This is just a sample
-  url: 
+  video: {fileID: 11400000, guid: 0a4b10c3d04ff2b42a00739f4d78f83c, type: 2}

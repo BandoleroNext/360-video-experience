@@ -1,23 +1,26 @@
 using System;
 using System.Net;
+using Descriptors;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Video;
 
 [RequireComponent(typeof(VideoPlayer))]
-public class SkyboxVideoController : MonoBehaviour
+public class VideoController : MonoBehaviour
 {
-    public SkyboxVideoDescriptor skyboxDescriptor;
+    public VideoWithInterruptionsDescriptor videoWithInterruptionsDescriptor;
     [SerializeField] private int renderTextureWidth = 4096;
     [SerializeField] private int renderTextureHeight = 2048;
+    [SerializeField] private Material targetMaterial;
 
     public float fadeResume = 1;
     public float fadePause = 0.4f;
     public float fadeTime = 0.2f;
-    private VideoPlayer _skyboxVideoPlayer;
+    private VideoPlayer _videoPlayer;
 
 
-    private RenderTexture _skyboxRenderTexture;
+    private RenderTexture _renderTexture;
     private static readonly int _exposure = Shader.PropertyToID("_Exposure");
 
 
@@ -25,20 +28,21 @@ public class SkyboxVideoController : MonoBehaviour
     {
         EventManager.Instance.onVideoResume.AddListener(VideoResume);
         EventManager.Instance.onVideoPause.AddListener(VideoPause);
+        _videoPlayer = GetComponent<VideoPlayer>();
         VideoStart();
     }
 
     private void VideoStart()
     {
-        var title = skyboxDescriptor.title;
-        var url = CheckForDemoVideo(skyboxDescriptor.url);
+        var title = videoWithInterruptionsDescriptor.video.title;
+        var url = CheckForDemoVideo(videoWithInterruptionsDescriptor.video.url);
 
         if (CheckVideoUrl(url))
         {
-            CreateSkybox(title);
+            CreateTextureAndSetupMaterial();
             PrepareAndStartVideoPlayback(url);
             EventManager.Instance.onVideoResume.Invoke();
-            _skyboxVideoPlayer.loopPointReached += VideoCompleted;
+            _videoPlayer.loopPointReached += VideoCompleted;
         }
         else
         {
@@ -48,12 +52,12 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void VideoResume()
     {
-        DoFadeAndCallCallback(fadeResume, () => { _skyboxVideoPlayer.Play(); },fadeTime);
+        DoFadeAndCallCallback(fadeResume, () => { _videoPlayer.Play(); },fadeTime);
     }
 
     private void VideoPause()
     {
-        DoFadeAndCallCallback(fadePause, () => { _skyboxVideoPlayer.Pause(); },fadeTime);
+        DoFadeAndCallCallback(fadePause, () => { _videoPlayer.Pause(); },fadeTime);
     }
 
     private string CheckForDemoVideo(string url)
@@ -70,19 +74,12 @@ public class SkyboxVideoController : MonoBehaviour
         }
     }
 
-    private void CreateSkybox(string title)
+    private void CreateTextureAndSetupMaterial()
     {
-        var skyboxMaterial = new Material(Shader.Find("Skybox/Panoramic"))
-        {
-            name = title
-        };
-        _skyboxRenderTexture = new RenderTexture(renderTextureWidth,renderTextureHeight,32, RenderTextureFormat.ARGB32);
-
-        RenderSettings.skybox = skyboxMaterial;
-        RenderSettings.skybox.SetFloat(_exposure, 0f);
-        RenderSettings.skybox.mainTexture = _skyboxRenderTexture;
-        _skyboxVideoPlayer = GetComponent<VideoPlayer>();
-        _skyboxVideoPlayer.targetTexture = _skyboxRenderTexture;
+        _renderTexture = new RenderTexture(renderTextureWidth,renderTextureHeight,32, RenderTextureFormat.ARGB32);
+        targetMaterial.SetFloat(_exposure, 0f);
+        targetMaterial.mainTexture = _renderTexture;
+        _videoPlayer.targetTexture = _renderTexture;
     }
 
     private bool CheckVideoUrl(string url)
@@ -136,17 +133,17 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void PrepareAndStartVideoPlayback(string videoUrl)
     {
-        _skyboxVideoPlayer.url = videoUrl;
+        _videoPlayer.url = videoUrl;
 
-        if (!_skyboxVideoPlayer.isPrepared)
+        if (!_videoPlayer.isPrepared)
         {
             Debug.Log("TO PREPARE!");
-            _skyboxVideoPlayer.prepareCompleted += VideoPlayerOnPrepareCompleted;
-            _skyboxVideoPlayer.Prepare();
+            _videoPlayer.prepareCompleted += VideoPlayerOnPrepareCompleted;
+            _videoPlayer.Prepare();
         }
         else
         {
-            VideoPlayerOnPrepareCompleted(_skyboxVideoPlayer);
+            VideoPlayerOnPrepareCompleted(_videoPlayer);
         }
     }
 
