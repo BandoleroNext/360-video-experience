@@ -34,23 +34,4 @@ public class GameManager : Singleton<GameManager>
             SceneManager.LoadSceneAsync(videoName, LoadSceneMode.Single);
         });
     }
-
-
-
-#if UNITY_EDITOR
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Going to Video Scene");
-            ChangeScene("SceneForTestChange");
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log("Going to Menu Scene");
-            ChangeScene(1);
-        }
-    }
-#endif
 }

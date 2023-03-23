@@ -17,6 +17,18 @@ public class DebugInteraction : MonoBehaviour
         {
             EventManager.Instance.OnSkyboxVideoResume.Invoke();
         }
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("Going to Video Scene");
+            GameManager.Instance.ChangeScene("SceneForTestChange");
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("Going to Menu Scene");
+            GameManager.Instance.ChangeScene(0);
+        }
     }
 #endif
 }
