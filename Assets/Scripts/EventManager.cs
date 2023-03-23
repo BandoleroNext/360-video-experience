@@ -1,19 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class EventManager : Singleton<EventManager>
 {
-    public UnityEvent OnSkyboxVideoPause;
-    public UnityEvent OnSkyboxVideoResume;
-    public UnityEvent OnSkyboxVideoCompleted;
+    public UnityEvent onVideoPause;
+    public UnityEvent onVideoResume;
+    public UnityEvent onVideoCompleted;
+    public UnityEvent<string> onInterruptionVideoStart;
+    public UnityEvent onInterruptionVideoCompleted;
     
     protected override void Awake()
     {
         base.Awake();
-        OnSkyboxVideoPause = new UnityEvent();
-        OnSkyboxVideoResume = new UnityEvent();
-        OnSkyboxVideoCompleted = new UnityEvent();
+        onVideoPause = new UnityEvent();
+        onVideoResume = new UnityEvent();
+        onVideoCompleted = new UnityEvent();
+        onInterruptionVideoStart = new UnityEvent<string>();
+        onInterruptionVideoCompleted = new UnityEvent();
     }
 }
