@@ -12,9 +12,9 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(Changing_CoroutineInd(index));
     }
 
-    public void ChangeScene(string videoName)
+    public void ChangeScene(string sceneName)
     {
-        StartCoroutine(Changing_CoroutineName(videoName)); 
+        StartCoroutine(Changing_CoroutineName(sceneName)); 
     }
 
     private static IEnumerator Changing_CoroutineInd(int index)
@@ -26,12 +26,12 @@ public class GameManager : Singleton<GameManager>
         });
     }
     
-    private static IEnumerator Changing_CoroutineName(string videoName)
+    private static IEnumerator Changing_CoroutineName(string sceneName)
     {
         yield return null;
         SkyboxVideoController.DoFadeAndCallCallback(0, () =>
         {
-            SceneManager.LoadSceneAsync(videoName, LoadSceneMode.Single);
+            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         });
     }
 }
