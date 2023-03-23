@@ -10,12 +10,24 @@ public class DebugInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            EventManager.Instance.onSkyboxVideoPause.Invoke();
+            EventManager.Instance.onVideoPause.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            EventManager.Instance.onSkyboxVideoResume.Invoke();
+            EventManager.Instance.onVideoResume.Invoke();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("Going to Video Scene");
+            GameManager.Instance.ChangeScene(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("Going to Menu Scene");
+            GameManager.Instance.ChangeScene("TestMenuScene");
         }
     }
 #endif
