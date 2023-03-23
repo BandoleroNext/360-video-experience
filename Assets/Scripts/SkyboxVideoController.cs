@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using System.Reflection;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Video;
 
 [RequireComponent(typeof(VideoPlayer))]
@@ -27,8 +22,8 @@ public class SkyboxVideoController : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.onSkyboxVideoResume.AddListener(VideoResume);
-        EventManager.Instance.onSkyboxVideoPause.AddListener(VideoPause);
+        EventManager.Instance.onVideoResume.AddListener(VideoResume);
+        EventManager.Instance.onVideoPause.AddListener(VideoPause);
         VideoStart();
     }
 
@@ -41,7 +36,7 @@ public class SkyboxVideoController : MonoBehaviour
         {
             CreateSkybox(title);
             PrepareAndStartVideoPlayback(url);
-            EventManager.Instance.onSkyboxVideoResume.Invoke();
+            EventManager.Instance.onVideoResume.Invoke();
             _skyboxVideoPlayer.loopPointReached += VideoCompleted;
         }
         else
@@ -166,7 +161,7 @@ public class SkyboxVideoController : MonoBehaviour
         Debug.Log("Video has ended");
         DoFadeAndCallCallback(0, () =>
         {
-            EventManager.Instance.onSkyboxVideoCompleted.Invoke();
+            EventManager.Instance.onVideoCompleted.Invoke();
         });
     }
 }
