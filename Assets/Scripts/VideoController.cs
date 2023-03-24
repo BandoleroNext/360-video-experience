@@ -35,7 +35,6 @@ public class VideoController : MonoBehaviour
 
     private void VideoStart()
     {
-        var title = videoWithInterruptionsDescriptor.video.title;
         var path = GeneratePathToVideo(videoWithInterruptionsDescriptor.video.url);
 
         if (path != "")
