@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 using UnityEngine.Video;
 
 [RequireComponent(typeof(VideoPlayer))]
-public class VideoController : MonoBehaviour
+public class VideoControllerWithInterruptions : MonoBehaviour
 {
     public VideoWithInterruptionsDescriptor videoWithInterruptionsDescriptor;
     [SerializeField] private int renderTextureWidth = 4096;
@@ -126,6 +126,7 @@ public class VideoController : MonoBehaviour
     {
         Debug.Log("READY");
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
+        var interruptionController = new InterruptionController(videoWithInterruptionsDescriptor.interruptions,source);
     }
 
     private void VideoCompleted(VideoPlayer vp)

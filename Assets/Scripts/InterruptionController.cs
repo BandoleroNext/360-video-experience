@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Descriptors;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -33,10 +34,10 @@ public class InterruptionController
             var interruptionIndex = currentInterruption;
             await UniTask.WaitUntil(()=>_currentVideoPlayer.frame >= keys[interruptionIndex]);
             var interruption = interruptions[keys[interruptionIndex]];
-            if (interruption is not PlainVideoInterruptionDescriptor videoInterruption) continue;
-            Debug.Log($"Video interruption {videoInterruption.title}, pausing 360 video at {_currentVideoPlayer.frame}");
-            EventManager.Instance.onSkyboxVideoPause.Invoke();
-            EventManager.Instance.onPLainVideoBegin.Invoke(videoInterruption.url);
+            if (interruption is not InterruptionVideoDescriptor videoInterruption) continue;
+            Debug.Log($"Video interruption {videoInterruption.video.title}, pausing 360 video at {_currentVideoPlayer.frame}");
+            EventManager.Instance.onVideoPause.Invoke();
+            EventManager.Instance.onInterruptionVideoStart.Invoke(videoInterruption.video.url);
         }
     }
 }
