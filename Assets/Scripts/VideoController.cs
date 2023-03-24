@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using Descriptors;
 using DG.Tweening;
@@ -35,12 +36,12 @@ public class VideoController : MonoBehaviour
     private void VideoStart()
     {
         var title = videoWithInterruptionsDescriptor.video.title;
-        var url = CheckForDemoVideo(videoWithInterruptionsDescriptor.video.url);
+        var path = GeneratePathToVideo(videoWithInterruptionsDescriptor.video.url);
 
-        if (CheckVideoUrl(url))
+        if (path != "")
         {
             CreateTextureAndSetupMaterial();
-            PrepareAndStartVideoPlayback(url);
+            PrepareAndStartVideoPlayback(path);
             EventManager.Instance.onVideoResume.Invoke();
             _videoPlayer.loopPointReached += VideoCompleted;
         }
@@ -50,6 +51,19 @@ public class VideoController : MonoBehaviour
         }
     }
 
+    private string GeneratePathToVideo(string url)
+    {
+        var persistentPath = Path.Combine(Application.persistentDataPath, url);
+        if (File.Exists(persistentPath))
+            return persistentPath;
+        var streamingPath = Path.Combine(Application.streamingAssetsPath, url);
+        if (File.Exists(streamingPath))
+            return streamingPath;
+        //if http ok, altrimenti cerco in streaming
+        if (File.Exists(url)||RemoteFileExists(url))
+            return url;
+        return "";
+    }
     private void VideoResume()
     {
         DoFadeAndCallCallback(fadeResume, () => { _videoPlayer.Play(); },fadeTime);
@@ -60,50 +74,12 @@ public class VideoController : MonoBehaviour
         DoFadeAndCallCallback(fadePause, () => { _videoPlayer.Pause(); },fadeTime);
     }
 
-    private string CheckForDemoVideo(string url)
-    {
-        if (url == "DemoVideo.mp4")
-        {
-            Debug.Log($"Loading up demo video!");
-            url = Application.dataPath + "/Videos/DemoVideo.mp4";
-            return url;
-        }
-        else
-        {
-            return url;
-        }
-    }
-
     private void CreateTextureAndSetupMaterial()
     {
         _renderTexture = new RenderTexture(renderTextureWidth,renderTextureHeight,32, RenderTextureFormat.ARGB32);
         targetMaterial.SetFloat(_exposure, 0f);
         targetMaterial.mainTexture = _renderTexture;
         _videoPlayer.targetTexture = _renderTexture;
-    }
-
-    private bool CheckVideoUrl(string url)
-    {
-        Debug.Log($"Searching for the video!");
-
-        if (System.IO.File.Exists(url))
-        {
-            return true;
-        }
-        else
-        {
-            Debug.Log($"Not found in memory, searching on the web");
-            if (RemoteFileExists(url))
-            {
-                Debug.Log($"Video found!");
-                return true;
-            }
-            else
-            {
-                Debug.LogError($"Video not found!");
-                return false;
-            }
-        }
     }
 
     private static bool RemoteFileExists(string url)
