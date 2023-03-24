@@ -45,8 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3734e962c9a65f747b8a9ad1ed0bf7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skyboxDescriptor: {fileID: 11400000, guid: 3cd1ecb9c7319fa43a6200ea5708e13f, type: 2}
-  skyboxRenderTexture: {fileID: 8400000, guid: 328fc59cf8c4165499b2c22c8944da56, type: 2}
+  videoWithInterruptionsDescriptor: {fileID: 11400000, guid: 3cd1ecb9c7319fa43a6200ea5708e13f, type: 2}
+  renderTextureWidth: 4096
+  renderTextureHeight: 2048
+  targetMaterial: {fileID: 2100000, guid: c56cd7951760a5d4aab44bca0e309a7f, type: 2}
+  fadeResume: 1
+  fadePause: 0.4
+  fadeTime: 0.2
 --- !u!328 &2348709183166521265
 VideoPlayer:
   m_ObjectHideFlags: 0
