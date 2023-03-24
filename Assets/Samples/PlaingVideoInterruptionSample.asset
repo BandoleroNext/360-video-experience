@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e5e9f2a29513c40b5f0c24bcd04c2f, type: 3}
   m_Name: PlaingVideoInterruptionSample
   m_EditorClassIdentifier: 
-  interruptAtPercentage: 12
-  title: Sample Test
-  description: This is just a sample
-  url: TestVideo.mp4
+  interruptAtPercentage: 50
+  video: {fileID: 11400000, guid: 0a4b10c3d04ff2b42a00739f4d78f83c, type: 2}

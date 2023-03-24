@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f5d7296b0368a4abea3f4832e6b68c, type: 3}
   m_Name: DescriptorExample
   m_EditorClassIdentifier: 
-  title: Sample test
-  description: This is just a sample
-  url: DemoVideo.mp4
+  video: {fileID: 11400000, guid: 69dd92615488a3048a760088a36c60f3, type: 2}
   interruptions:
   - {fileID: 11400000, guid: 9c1fc461b373618439616710e96ebb59, type: 2}
