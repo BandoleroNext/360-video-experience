@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 1542202a7ea53ed41b39928ce57d0700, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: c56cd7951760a5d4aab44bca0e309a7f, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.20837422, g: 0.20837422, b: 0.20837422, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -270,7 +270,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1688395661757239389
 PrefabInstance:
@@ -285,7 +285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1688395661374735473, guid: b1c21bb3f0d45084aafd6b8fceb1ae79, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1688395661374735473, guid: b1c21bb3f0d45084aafd6b8fceb1ae79, type: 3}
       propertyPath: m_LocalPosition.x
@@ -393,9 +393,17 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: targetMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: c56cd7951760a5d4aab44bca0e309a7f, type: 2}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
       propertyPath: skyboxRenderTexture
       value: 
       objectReference: {fileID: 8400000, guid: bbeaf2f082239114ea0c2eefa970df76, type: 2}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: videoWithInterruptionsDescriptor
+      value: 
+      objectReference: {fileID: 11400000, guid: 3cd1ecb9c7319fa43a6200ea5708e13f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
 --- !u!1001 &3262294788952357975
