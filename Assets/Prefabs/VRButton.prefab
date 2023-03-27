@@ -1336,7 +1336,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GO TO MENU
+  m_text: SAMPLE TITLE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: df4e4288b6cd0954f8f6f451aaa31422, type: 2}
   m_sharedMaterial: {fileID: -3268436777215677734, guid: df4e4288b6cd0954f8f6f451aaa31422, type: 2}

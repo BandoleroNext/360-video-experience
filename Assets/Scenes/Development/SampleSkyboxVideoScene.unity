@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &321081617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 649119737424730418, guid: b1c21bb3f0d45084aafd6b8fceb1ae79, type: 3}
+  m_PrefabInstance: {fileID: 1688395661757239389}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5b8b574e52f4747ace4e00fdb34346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &532112602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,6 +141,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 321081617}
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ChangeScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: TestMenuScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1863588843165690156, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
       propertyPath: m_Name
       value: VRButton
