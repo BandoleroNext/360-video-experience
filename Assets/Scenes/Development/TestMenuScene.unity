@@ -130,6 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 473409182459711807, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _size.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 473409182459711807, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: _size.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 1662759952154789978, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
       propertyPath: _whenSelect.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -213,6 +221,14 @@ PrefabInstance:
     - target: {fileID: 6077128236140537008, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
       propertyPath: m_text
       value: GO TO VIDEO
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197090020772018952, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197090020772018952, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e4ddf3e5bebcc54696e8bc8343dc83f, type: 3}
