@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1145141885007017853}
   m_Layer: 0
-  m_Name: OculusInteractionSkyboxRig
+  m_Name: CustomInteractionRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

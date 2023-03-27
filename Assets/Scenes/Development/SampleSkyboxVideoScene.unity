@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.20837422, g: 0.20837422, b: 0.20837422, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -573,7 +573,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1145141885007017852, guid: a5cdfea79cffcef47aaf00c3c117aa80, type: 3}
       propertyPath: m_Name
-      value: OculusInteractionSkyboxRig
+      value: CustomInteractionRig
       objectReference: {fileID: 0}
     - target: {fileID: 1145141885007017853, guid: a5cdfea79cffcef47aaf00c3c117aa80, type: 3}
       propertyPath: m_RootOrder
