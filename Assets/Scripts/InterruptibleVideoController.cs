@@ -29,7 +29,7 @@ public class InterruptibleVideoController : MonoBehaviour
     {
         EventManager.Instance.onVideoResume.AddListener(VideoResume);
         EventManager.Instance.onVideoPause.AddListener(VideoPause);
-        EventManager.Instance.onInterruptionVideoStart.AddListener(InterruptVideo);
+        EventManager.Instance.onInterruptibleVideoStart.AddListener(InterruptVideo);
         _videoPlayer = GetComponent<VideoPlayer>();
         VideoStart();
     }

@@ -39,7 +39,7 @@ public class InterruptionController
             if (interruption is not InterruptionVideoDescriptor videoInterruption) continue;
             Debug.Log(
                 $"Video interruption {videoInterruption.video.title}, pausing 360 video at {_currentVideoPlayer.frame}");
-            EventManager.Instance.onInterruptionVideoStart.Invoke(videoInterruption.video.url);
+            EventManager.Instance.onInterruptibleVideoStart.Invoke(videoInterruption.video.url);
         }
     }
 }

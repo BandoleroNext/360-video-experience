@@ -7,8 +7,8 @@ namespace Managers
         public UnityEvent onVideoPause;
         public UnityEvent onVideoResume;
         public UnityEvent onVideoCompleted;
-        public UnityEvent<string> onInterruptionVideoStart;
-        public UnityEvent onInterruptionVideoCompleted;
+        public UnityEvent<string> onInterruptibleVideoStart;
+        public UnityEvent onInterruptibleVideoCompleted;
 
         protected override void Awake()
         {
@@ -16,8 +16,8 @@ namespace Managers
             onVideoPause = new UnityEvent();
             onVideoResume = new UnityEvent();
             onVideoCompleted = new UnityEvent();
-            onInterruptionVideoStart = new UnityEvent<string>();
-            onInterruptionVideoCompleted = new UnityEvent();
+            onInterruptibleVideoStart = new UnityEvent<string>();
+            onInterruptibleVideoCompleted = new UnityEvent();
         }
     }
 }
