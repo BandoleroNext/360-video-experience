@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2348709183166521267}
   - component: {fileID: 2348709183166521265}
   m_Layer: 0
-  m_Name: Sky Box Video Controller
+  m_Name: InterruptibleVideoController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Managers;
 using Oculus.Interaction;
 using UnityEngine;
 using UnityEngine.Video;
 
 [RequireComponent(typeof(VideoPlayer))]
-public class VideoControllerWithFlowControls : MonoBehaviour
+public class InteractiveVideoController : MonoBehaviour
 {
     [SerializeField] private Material targetMaterial;
     [SerializeField] private GameObject screenParent;
@@ -19,7 +20,7 @@ public class VideoControllerWithFlowControls : MonoBehaviour
     {
         _videoPlayer = GetComponent<VideoPlayer>();
         screenParent.SetActive(false);
-        EventManager.Instance.onInterruptionVideoStart.AddListener(SetupAndStartVideo);
+        EventManager.Instance.onInterruptibleVideoStart.AddListener(SetupAndStartVideo);
     }
 
     private void SetupAndStartVideo(string url)
@@ -77,7 +78,7 @@ public class VideoControllerWithFlowControls : MonoBehaviour
     private void EndVideo(VideoPlayer source)
     {
         screenParent.SetActive(false);
-        EventManager.Instance.onInterruptionVideoCompleted.Invoke();
+        EventManager.Instance.onInterruptibleVideoCompleted.Invoke();
         EventManager.Instance.onVideoResume.Invoke();
     }
 
