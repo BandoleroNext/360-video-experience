@@ -36,10 +36,19 @@ public class InterruptionController
         {
             await UniTask.WaitUntil(() => _currentVideoPlayer.frame >= key);
             var interruption = _interruptions[key];
-            if (interruption is not InterruptionVideoDescriptor videoInterruption) continue;
-            Debug.Log(
-                $"Video interruption {videoInterruption.video.title}, pausing 360 video at {_currentVideoPlayer.frame}");
-            EventManager.Instance.onInterruptibleVideoStart.Invoke(videoInterruption.video.url);
+            if (interruption is InterruptionVideoDescriptor videoInterruption)
+            {
+                Debug.Log(
+                    $"Video interruption {videoInterruption.video.title}, pausing 360 video at {_currentVideoPlayer.frame}");
+                EventManager.Instance.onInterruptibleVideoStart.Invoke(videoInterruption.video.url);
+            }
+
+            if (interruption is QuizInterruptionDescriptor quizInterruption)
+            {
+                Debug.Log(
+                    $"Quiz interruption {quizInterruption}, pausing 360 video at {_currentVideoPlayer.frame}");
+                EventManager.Instance.onQuizStart.Invoke();
+            }
         }
     }
 }
