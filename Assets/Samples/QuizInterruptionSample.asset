@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dab2ebd5cf2a4a44a09442109ba3727, type: 3}
-  m_Name: Quiz Interruption Sample
+  m_Name: QuizInterruptionSample
   m_EditorClassIdentifier: 
-  interruptAtPercentage: 0
+  interruptAtPercentage: 10
   question: Question?
   answers:
   - answer: Wrong answer#1

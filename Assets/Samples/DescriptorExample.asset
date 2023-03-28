@@ -15,3 +15,4 @@ MonoBehaviour:
   video: {fileID: 11400000, guid: 69dd92615488a3048a760088a36c60f3, type: 2}
   interruptions:
   - {fileID: 11400000, guid: 9c1fc461b373618439616710e96ebb59, type: 2}
+  - {fileID: 11400000, guid: 58296493c5b4afc4baf587f05175053e, type: 2}

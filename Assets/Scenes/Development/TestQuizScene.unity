@@ -318,6 +318,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1252793554
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521264, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521266, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: m_Name
+      value: Sky Box Video Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: resolution
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: targetMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: c56cd7951760a5d4aab44bca0e309a7f, type: 2}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: skyboxRenderTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: bbeaf2f082239114ea0c2eefa970df76, type: 2}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: interruptibleVideoDescriptor
+      value: 
+      objectReference: {fileID: 11400000, guid: 3cd1ecb9c7319fa43a6200ea5708e13f, type: 2}
+    - target: {fileID: 2348709183166521267, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
+      propertyPath: videoWithInterruptionsDescriptor
+      value: 
+      objectReference: {fileID: 11400000, guid: 3cd1ecb9c7319fa43a6200ea5708e13f, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 05b1508c7e823f5479f863c6f06c9f8e, type: 3}
 --- !u!1001 &1446345352
 PrefabInstance:
   m_ObjectHideFlags: 0

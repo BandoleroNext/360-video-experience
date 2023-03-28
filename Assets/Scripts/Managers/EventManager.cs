@@ -9,6 +9,8 @@ namespace Managers
         public UnityEvent onVideoCompleted;
         public UnityEvent<string> onInterruptibleVideoStart;
         public UnityEvent onInterruptibleVideoCompleted;
+        public UnityEvent<string> onQuizStart;
+        public UnityEvent onAnswerGiven;
 
         protected override void Awake()
         {
@@ -18,6 +20,8 @@ namespace Managers
             onVideoCompleted = new UnityEvent();
             onInterruptibleVideoStart = new UnityEvent<string>();
             onInterruptibleVideoCompleted = new UnityEvent();
+            onQuizStart = new UnityEvent<string>();
+            onAnswerGiven = new UnityEvent();
         }
     }
 }
