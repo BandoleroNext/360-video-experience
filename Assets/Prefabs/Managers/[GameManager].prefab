@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d5b8b574e52f4747ace4e00fdb34346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeSceneFadeTime: 0.2
+  rightAnswerSound: {fileID: 8300000, guid: 60123ce26549bb74a867b82e9559025d, type: 3}
+  wrongAnswerSound: {fileID: 8300000, guid: 69dabc09275b6eb4ea522401948d9e1b, type: 3}
