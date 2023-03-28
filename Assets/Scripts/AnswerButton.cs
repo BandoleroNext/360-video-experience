@@ -11,40 +11,34 @@ using UnityEngine;
 
 public class AnswerButton : MonoBehaviour
 {
-    [SerializeField] private QuizInterruptionDescriptor _quizInterruptionDescriptor;
-    private Answer _testValue;
-    
-    void Start()
+    private Answer _quizAnswer;
+
+    public void Setup(Answer quizAnswer)
     {
-        _testValue = _quizInterruptionDescriptor.answers.First();
-        Setup();
-    }
-    
-    private void Setup()
-    {
+        _quizAnswer = quizAnswer;
         UpdateText();
         UpdateCallBack();
     }
 
     private void UpdateText()
     {
-        var answer = _testValue.answer;
+        var answer = _quizAnswer.answer;
         GetComponentInChildren<TextMeshPro>().text = answer;
     }
 
     private void UpdateCallBack()
     {
-        if (_testValue.isCorrect )
+        if (_quizAnswer.isCorrect )
         {
             transform.Find("Audio/ButtonRelease").GetComponent<AudioSource>().clip = GameManager.Instance.rightAnswerSound;
-            EventManager.Instance.onAnswerGiven.Invoke(true);
             Debug.Log("Selected right answer");
+            EventManager.Instance.onAnswerGiven.Invoke(true);
         }
         else
         {
             transform.Find("Audio/ButtonRelease").GetComponent<AudioSource>().clip = GameManager.Instance.wrongAnswerSound;
-            EventManager.Instance.onAnswerGiven.Invoke(false);
             Debug.Log("Selected wrong answer");
+            EventManager.Instance.onAnswerGiven.Invoke(false);
         }
     }
 }

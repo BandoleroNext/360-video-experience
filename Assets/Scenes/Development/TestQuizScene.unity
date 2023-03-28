@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.20861712, g: 0.20861712, b: 0.20861712, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -562,7 +562,64 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259185806894242604, guid: 09f10c33607a02b479043ca23abcf91c, type: 3}
       propertyPath: m_Name
-      value: AnswerButton
+      value: ExampleAnswerButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f10c33607a02b479043ca23abcf91c, type: 3}
+--- !u!1001 &8619241194506252126
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575560, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8619241195289575562, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}
+      propertyPath: m_Name
+      value: QuizController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 436e65533f7e9cb48a726d64c84dd157, type: 3}

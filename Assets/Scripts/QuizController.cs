@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Descriptors;
 using UnityEngine;
 
 public class QuizController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private QuizInterruptionDescriptor quizInterruptionDescriptor;
+    private Answer _testValue;
+    
     void Start()
     {
-        
+        _testValue = quizInterruptionDescriptor.answers.First();
+        GameObject.Find("ExampleAnswerButton").GetComponent<AnswerButton>().Setup(_testValue);
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+         
     }
 }
