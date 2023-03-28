@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 public class DebugInteraction : MonoBehaviour
 {
-    
 #if UNITY_EDITOR
     private void Update()
     {
@@ -17,7 +17,7 @@ public class DebugInteraction : MonoBehaviour
         {
             EventManager.Instance.onVideoResume.Invoke();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             Debug.Log("Going to Video Scene");

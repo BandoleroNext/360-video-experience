@@ -1,21 +1,23 @@
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-public class EventManager : Singleton<EventManager>
+namespace Managers
 {
-    public UnityEvent onVideoPause;
-    public UnityEvent onVideoResume;
-    public UnityEvent onVideoCompleted;
-    public UnityEvent<string> onInterruptionVideoStart;
-    public UnityEvent onInterruptionVideoCompleted;
-    
-    protected override void Awake()
+    public class EventManager : Singleton<EventManager>
     {
-        base.Awake();
-        onVideoPause = new UnityEvent();
-        onVideoResume = new UnityEvent();
-        onVideoCompleted = new UnityEvent();
-        onInterruptionVideoStart = new UnityEvent<string>();
-        onInterruptionVideoCompleted = new UnityEvent();
+        public UnityEvent onVideoPause;
+        public UnityEvent onVideoResume;
+        public UnityEvent onVideoCompleted;
+        public UnityEvent<string> onInterruptibleVideoStart;
+        public UnityEvent onInterruptibleVideoCompleted;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            onVideoPause = new UnityEvent();
+            onVideoResume = new UnityEvent();
+            onVideoCompleted = new UnityEvent();
+            onInterruptibleVideoStart = new UnityEvent<string>();
+            onInterruptibleVideoCompleted = new UnityEvent();
+        }
     }
 }

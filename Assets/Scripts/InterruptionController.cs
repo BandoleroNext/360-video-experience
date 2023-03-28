@@ -3,41 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Descriptors;
+using Managers;
 using UnityEngine;
 using UnityEngine.Video;
 
 public class InterruptionController
 {
     private readonly VideoPlayer _currentVideoPlayer;
-    
+    private readonly Dictionary<long, InterruptionDescriptor> _interruptions;
+
     public InterruptionController(IEnumerable<InterruptionDescriptor> interruptions, VideoPlayer player)
     {
         _currentVideoPlayer = player;
         var orderedInterruptions = interruptions.OrderBy(descriptor => descriptor.interruptAtPercentage).ToList();
-        var timestampToInterruption = new Dictionary<long, InterruptionDescriptor>();
+        _interruptions = new Dictionary<long, InterruptionDescriptor>();
         var videoFrameLength = (long)(player.length * player.frameRate);
         foreach (var interruption in orderedInterruptions)
         {
             var timestamp = videoFrameLength * interruption.interruptAtPercentage / 100;
-            timestampToInterruption[timestamp] = interruption;
+            _interruptions[timestamp] = interruption;
         }
-        if(orderedInterruptions.Count != timestampToInterruption.Count)
-            Debug.LogWarning($"Some interruptions with the same percentage were found. Only the last one with the same percentage will be used. Update the percentage to be different");
-        ManageInterruptions(timestampToInterruption);
+
+        if (orderedInterruptions.Count != _interruptions.Count)
+            Debug.LogWarning(
+                $"Some interruptions with the same percentage were found. Only the last one with the same percentage will be used. Update the percentage to be different");
+        ManageInterruptions();
     }
 
-    private async void ManageInterruptions(Dictionary<long,InterruptionDescriptor> interruptions)
+    private async void ManageInterruptions()
     {
-        var keys = interruptions.Keys.ToList();
-        for (var currentInterruption = 0; currentInterruption < keys.Count; currentInterruption++)
+        foreach (var key in _interruptions.Keys)
         {
-            var interruptionIndex = currentInterruption;
-            await UniTask.WaitUntil(()=>_currentVideoPlayer.frame >= keys[interruptionIndex]);
-            var interruption = interruptions[keys[interruptionIndex]];
+            await UniTask.WaitUntil(() => _currentVideoPlayer.frame >= key);
+            var interruption = _interruptions[key];
             if (interruption is not InterruptionVideoDescriptor videoInterruption) continue;
-            Debug.Log($"Video interruption {videoInterruption.video.title}, pausing 360 video at {_currentVideoPlayer.frame}");
-            EventManager.Instance.onVideoPause.Invoke();
-            EventManager.Instance.onInterruptionVideoStart.Invoke(videoInterruption.video.url);
+            Debug.Log(
+                $"Video interruption {videoInterruption.video.title}, pausing 360 video at {_currentVideoPlayer.frame}");
+            EventManager.Instance.onInterruptibleVideoStart.Invoke(videoInterruption.video.url);
         }
     }
 }
