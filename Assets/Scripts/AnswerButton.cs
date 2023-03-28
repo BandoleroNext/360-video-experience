@@ -1,16 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Descriptors;
+using TMPro;
 using UnityEngine;
 
 public class AnswerButton : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private QuizInterruptionDescriptor _quizInterruptionDescriptor;
     void Start()
     {
-        
+        var answer = _quizInterruptionDescriptor.answers.First().answer;
+        GetComponentInChildren<TextMeshPro>().text = answer;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         
