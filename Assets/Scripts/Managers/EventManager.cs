@@ -10,7 +10,7 @@ namespace Managers
         public UnityEvent<string> onInterruptibleVideoStart;
         public UnityEvent onInterruptibleVideoCompleted;
         public UnityEvent onQuizStart;
-        public UnityEvent onAnswerGiven;
+        public UnityEvent<bool> onAnswerGiven;
 
         protected override void Awake()
         {
@@ -21,7 +21,7 @@ namespace Managers
             onInterruptibleVideoStart = new UnityEvent<string>();
             onInterruptibleVideoCompleted = new UnityEvent();
             onQuizStart = new UnityEvent();
-            onAnswerGiven = new UnityEvent();
+            onAnswerGiven = new UnityEvent<bool>();
         }
     }
 }
