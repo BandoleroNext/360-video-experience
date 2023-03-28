@@ -3,14 +3,14 @@ using System.IO;
 using System.Net;
 using Descriptors;
 using DG.Tweening;
+using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Video;
 
 [RequireComponent(typeof(VideoPlayer))]
-public class VideoController : MonoBehaviour
+public class InterruptibleVideoController : MonoBehaviour
 {
-    public VideoWithInterruptionsDescriptor videoWithInterruptionsDescriptor;
+    public InterruptibleVideoDescriptor interruptibleVideoDescriptor;
     [SerializeField] private int renderTextureWidth = 4096;
     [SerializeField] private int renderTextureHeight = 2048;
     [SerializeField] private Material targetMaterial;
@@ -29,13 +29,19 @@ public class VideoController : MonoBehaviour
     {
         EventManager.Instance.onVideoResume.AddListener(VideoResume);
         EventManager.Instance.onVideoPause.AddListener(VideoPause);
+        EventManager.Instance.onInterruptibleVideoStart.AddListener(InterruptVideo);
         _videoPlayer = GetComponent<VideoPlayer>();
         VideoStart();
     }
 
+    private void InterruptVideo(string interruptionUrl)
+    {
+        EventManager.Instance.onVideoPause.Invoke();
+    }
+
     private void VideoStart()
     {
-        var path = GeneratePathToVideo(videoWithInterruptionsDescriptor.video.url);
+        var path = GeneratePathToVideo(interruptibleVideoDescriptor.video.url);
 
         if (path != "")
         {
@@ -126,6 +132,7 @@ public class VideoController : MonoBehaviour
     {
         Debug.Log("READY");
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
+        var interruptionController = new InterruptionController(interruptibleVideoDescriptor.interruptions,source);
     }
 
     private void VideoCompleted(VideoPlayer vp)
