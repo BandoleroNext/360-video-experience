@@ -32,7 +32,7 @@ public class QuizController : MonoBehaviour
 
     private void CreateAndSetEachButton(Answer singleAnswer)
     {
-        var answerButton = Instantiate(answerButtonPrefab, new Vector3(0, 1, 0.335f), Quaternion.identity);
+        var answerButton = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         answerButton.name = "Answer";
         _listOfAnswerButtons.Add(answerButton);
         answerButton.GetComponent<AnswerButton>().Setup(singleAnswer);
@@ -68,9 +68,9 @@ public class QuizController : MonoBehaviour
 
     private void ContinueVideo(bool isCorrect)
     {
-        for (var i = 0; i < _listOfAnswerButtons.Count; i++)
+        foreach (var t in _listOfAnswerButtons)
         {
-            Destroy(_listOfAnswerButtons[i]);
+            Destroy(t);
         }
         Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
         EventManager.Instance.onVideoResume.Invoke();
