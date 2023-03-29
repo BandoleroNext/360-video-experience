@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quizInterruptionDescriptor: {fileID: 11400000, guid: 58296493c5b4afc4baf587f05175053e, type: 2}
+  answerButtonPrefab: {fileID: 7259185806894242604, guid: 09f10c33607a02b479043ca23abcf91c, type: 3}
