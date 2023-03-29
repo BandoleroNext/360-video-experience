@@ -12,9 +12,21 @@ public class QuizController : MonoBehaviour
 
     void Start()
     {
+        var answers = quizInterruptionDescriptor.answers;
+        foreach (var singleAnswer in answers )
+        {
+            CreateAndSetEachButton(singleAnswer);
+        }
+        
+    }
+
+
+    void CreateAndSetEachButton(Answer singleAnswer)
+    {
         var answer1 = Instantiate(answerButtonPrefab, new Vector3(0, 1, 0.335f), Quaternion.identity);
         answer1.name = "Answer1";
         _testValue = quizInterruptionDescriptor.answers[0];
-        GameObject.Find("Answer1").GetComponent<AnswerButton>().Setup(_testValue);
+        GameObject.Find("Answer1").GetComponent<AnswerButton>().Setup(_testValue); 
     }
+    
 }
