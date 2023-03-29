@@ -30,13 +30,11 @@ public class AnswerButton : MonoBehaviour
         if (_quizAnswer.isCorrect)
         {
             transform.Find("Audio/ButtonRelease").GetComponent<AudioSource>().clip = GameManager.Instance.rightAnswerSound;
-            Debug.Log("Selected right answer");
             EventManager.Instance.onAnswerGiven.Invoke(true);
         }
         else
         {
             transform.Find("Audio/ButtonRelease").GetComponent<AudioSource>().clip = GameManager.Instance.wrongAnswerSound;
-            Debug.Log("Selected wrong answer");
             EventManager.Instance.onAnswerGiven.Invoke(false);
         }
     }
