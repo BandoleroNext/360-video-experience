@@ -17,6 +17,7 @@ public class AnswerButton : MonoBehaviour
     {
         _quizAnswer = quizAnswer;
         UpdateText();
+        UpdateSound();
     }
 
     private void UpdateText()
@@ -24,20 +25,25 @@ public class AnswerButton : MonoBehaviour
         var answer = _quizAnswer.answer;
         GetComponentInChildren<TextMeshPro>().text = answer;
     }
-
-    public void UpdateCallBack()
+    
+    private void UpdateSound()
     {
-        if (_quizAnswer.isCorrect)
+        var source = GetComponentInChildren<AudioSource>();
+        if (!source)
         {
-            transform.Find("Audio/ButtonRelease").GetComponent<AudioSource>().clip = GameManager.Instance.rightAnswerSound;
-            Debug.Log("Selected right answer");
-            EventManager.Instance.onAnswerGiven.Invoke(true);
+            Debug.LogError("Audio Source not found in prefab");
+            Destroy(gameObject);
         }
         else
         {
-            transform.Find("Audio/ButtonRelease").GetComponent<AudioSource>().clip = GameManager.Instance.wrongAnswerSound;
-            Debug.Log("Selected wrong answer");
-            EventManager.Instance.onAnswerGiven.Invoke(false);
+            source.clip = _quizAnswer.isCorrect
+                ? GameManager.Instance.rightAnswerSound
+                : GameManager.Instance.wrongAnswerSound;
         }
+    }
+
+    public void UpdateCallBack()
+    {
+        EventManager.Instance.onAnswerGiven.Invoke(_quizAnswer.isCorrect);
     }
 }
