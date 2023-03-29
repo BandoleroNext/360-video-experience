@@ -9,15 +9,10 @@ public class QuizController : MonoBehaviour
     [SerializeField] private QuizInterruptionDescriptor quizInterruptionDescriptor;
     private Answer _testValue;
     
+    
     void Start()
     {
-        _testValue = quizInterruptionDescriptor.answers.First();
+        _testValue = quizInterruptionDescriptor.answers[1];
         GameObject.Find("ExampleAnswerButton").GetComponent<AnswerButton>().Setup(_testValue);
-    }
-
-    
-    void Update()
-    {
-         
     }
 }

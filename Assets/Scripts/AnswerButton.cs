@@ -17,7 +17,6 @@ public class AnswerButton : MonoBehaviour
     {
         _quizAnswer = quizAnswer;
         UpdateText();
-        UpdateCallBack();
     }
 
     private void UpdateText()
@@ -26,9 +25,9 @@ public class AnswerButton : MonoBehaviour
         GetComponentInChildren<TextMeshPro>().text = answer;
     }
 
-    private void UpdateCallBack()
+    public void UpdateCallBack()
     {
-        if (_quizAnswer.isCorrect )
+        if (_quizAnswer.isCorrect)
         {
             transform.Find("Audio/ButtonRelease").GetComponent<AudioSource>().clip = GameManager.Instance.rightAnswerSound;
             Debug.Log("Selected right answer");
