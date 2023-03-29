@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dab2ebd5cf2a4a44a09442109ba3727, type: 3}
   m_Name: QuizInterruptionSample
   m_EditorClassIdentifier: 
-  interruptAtPercentage: 10
+  interruptAtPercentage: 30
   question: Question?
   answers:
   - answer: Wrong answer#1

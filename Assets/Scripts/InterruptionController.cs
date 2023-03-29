@@ -47,7 +47,7 @@ public class InterruptionController
             {
                 Debug.Log(
                     $"Quiz interruption {quizInterruption}, pausing 360 video at {_currentVideoPlayer.frame}");
-                EventManager.Instance.onQuizStart.Invoke();
+                EventManager.Instance.onQuizStart.Invoke(quizInterruption);
             }
         }
     }

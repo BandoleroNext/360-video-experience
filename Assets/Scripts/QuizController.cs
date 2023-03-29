@@ -1,28 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Descriptors;
+using Managers;
 using UnityEngine;
 
 public class QuizController : MonoBehaviour
 {
-    [SerializeField] private QuizInterruptionDescriptor quizInterruptionDescriptor;
     public GameObject answerButtonPrefab;
     private List<GameObject> _listOfAnswerButtons;
 
-    void Start()
+    private void Start()
     {
-        var answers = quizInterruptionDescriptor.answers;
+         EventManager.Instance.onQuizStart.AddListener(QuizStart);
+         EventManager.Instance.onAnswerGiven.AddListener(ContinueVideo);
+    }
+
+    private void QuizStart(QuizInterruptionDescriptor quizDescriptor)
+    {
+        EventManager.Instance.onVideoPause.Invoke();
+        var answers = quizDescriptor.answers;
         _listOfAnswerButtons = new List<GameObject>();
         foreach (var singleAnswer in answers)
         {
             CreateAndSetEachButton(singleAnswer);
         }
-        PlaceAnswersIntoScene();
+        PlaceAnswersIntoScene(); 
     }
 
 
-    void CreateAndSetEachButton(Answer singleAnswer)
+    private void CreateAndSetEachButton(Answer singleAnswer)
     {
         var answerButton = Instantiate(answerButtonPrefab, new Vector3(0, 1, 0.335f), Quaternion.identity);
         answerButton.name = "Answer";
@@ -57,5 +65,14 @@ public class QuizController : MonoBehaviour
             answer.transform.localPosition = positions[i];
         }
     }
-    
+
+    private void ContinueVideo(bool isCorrect)
+    {
+        for (var i = 0; i < _listOfAnswerButtons.Count; i++)
+        {
+            Destroy(_listOfAnswerButtons[i]);
+        }
+        Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
+        EventManager.Instance.onVideoResume.Invoke();
+    }
 }
