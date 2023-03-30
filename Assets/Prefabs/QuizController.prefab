@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279fd6cfd530e1042ac9459400c83d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quizInterruptionDescriptor: {fileID: 11400000, guid: 58296493c5b4afc4baf587f05175053e, type: 2}
   answerButtonPrefab: {fileID: 7259185806894242604, guid: 09f10c33607a02b479043ca23abcf91c, type: 3}
+  questionPrefab: {fileID: 1705200424196765707, guid: a90defef6d336bd479177f7a8d8c42bf, type: 3}

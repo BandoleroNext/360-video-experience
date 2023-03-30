@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Descriptors;
 using Managers;
+using Oculus.Interaction;
+using TMPro;
 using UnityEngine;
 
 public class QuizController : MonoBehaviour
 {
     public GameObject answerButtonPrefab;
+    public GameObject questionPrefab;
     private List<GameObject> _listOfAnswerButtons;
 
     private void Start()
@@ -30,10 +33,12 @@ public class QuizController : MonoBehaviour
         }
         PlaceAnswersIntoScene(); 
     }
-    
+
     private void CreateAndSetQuestion(string question)
     {
-        ;
+        var questionView = Instantiate(questionPrefab, new Vector3(0, 1.5f, 0.5f), Quaternion.identity);
+        questionView.name = "Question";
+        questionView.GetComponentInChildren<TextMeshPro>().text = question;
     }
 
     private void CreateAndSetEachButton(Answer singleAnswer)
@@ -50,11 +55,11 @@ public class QuizController : MonoBehaviour
             {new Vector3(-0.25f,1,0.5f), new Vector3(0.25f,1,0.5f)};
         
         var threeOptionsLocalPositions = new[]
-            {new Vector3(-0.25f, 1.2f, 0.5f), new Vector3(0.25f, 1.2f, 0.5f), new Vector3(0, 0.7f, 0.5f)};
+            {new Vector3(-0.25f, 1.13f, 0.5f), new Vector3(0.25f, 1.13f, 0.5f), new Vector3(0, 0.7f, 0.5f)};
 
         var fourOptionsLocalPositions = new[]
         {
-            new Vector3(-0.25f, 1.2f, 0.5f), new Vector3(0.25f, 1.2f, 0.5f),
+            new Vector3(-0.25f, 1.13f, 0.5f), new Vector3(0.25f, 1.13f, 0.5f),
             new Vector3(-0.25f, 0.7f, 0.5f), new Vector3(0.25f, 0.7f, 0.5f)
         };
 
@@ -74,6 +79,7 @@ public class QuizController : MonoBehaviour
 
     private void ContinueVideo(bool isCorrect)
     {
+        Destroy(GameObject.Find("Question"));
         foreach (var t in _listOfAnswerButtons)
         {
             Destroy(t);
