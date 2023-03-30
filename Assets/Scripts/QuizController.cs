@@ -15,12 +15,12 @@ public class QuizController : MonoBehaviour
     private List<GameObject> _listOfAnswerButtons;
     public bool timer;
     public float timeRemaining = 10;
-    private bool _timerIsRunning = false;
+    private bool _timerIsRunning;
 
     private void Start()
     {
-         EventManager.Instance.onQuizStart.AddListener(QuizStart);
-         EventManager.Instance.onAnswerGiven.AddListener(ContinueVideo);
+        EventManager.Instance.onQuizStart.AddListener(QuizStart);
+        EventManager.Instance.onAnswerGiven.AddListener(ContinueVideo);
     }
 
     private void QuizStart(QuizInterruptionDescriptor quizDescriptor)
@@ -34,14 +34,21 @@ public class QuizController : MonoBehaviour
         {
             CreateAndSetEachButton(singleAnswer);
         }
-        PlaceAnswersIntoScene(); 
+        PlaceAnswersIntoScene();
     }
 
     private void CreateAndSetQuestion(string question)
     {
         var questionView = Instantiate(questionPrefab, new Vector3(0, 1.5f, 0.5f), Quaternion.identity);
         questionView.name = "Question";
-        questionView.GetComponentInChildren<TextMeshPro>().text = question;
+        var questionText = questionView.GetComponentInChildren<TextMeshPro>();
+        if (!questionText)
+        {
+           Debug.LogError("TextMeshPro missing in prefab");
+           Destroy(gameObject);
+           return;
+        }
+        questionText.text = question;
     }
 
     private void CreateAndSetEachButton(Answer singleAnswer)
@@ -51,14 +58,14 @@ public class QuizController : MonoBehaviour
         _listOfAnswerButtons.Add(answerButton);
         answerButton.GetComponent<AnswerButton>().Setup(singleAnswer);
     }
-    
+
     private void PlaceAnswersIntoScene()
     {
         var twoOptionsLocalPositions = new[]
-            {new Vector3(-0.25f,1,0.5f), new Vector3(0.25f,1,0.5f)};
-        
+            { new Vector3(-0.25f, 1, 0.5f), new Vector3(0.25f, 1, 0.5f) };
+
         var threeOptionsLocalPositions = new[]
-            {new Vector3(-0.25f, 1.13f, 0.5f), new Vector3(0.25f, 1.13f, 0.5f), new Vector3(0, 0.7f, 0.5f)};
+            { new Vector3(-0.25f, 1.13f, 0.5f), new Vector3(0.25f, 1.13f, 0.5f), new Vector3(0, 0.7f, 0.5f) };
 
         var fourOptionsLocalPositions = new[]
         {
@@ -92,6 +99,7 @@ public class QuizController : MonoBehaviour
         {
             Destroy(t);
         }
+
         Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
         EventManager.Instance.onVideoResume.Invoke();
     }
@@ -102,13 +110,12 @@ public class QuizController : MonoBehaviour
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
+            return;
         }
-        else
-        {
-            Debug.Log("Time has run out!");
-            timeRemaining = 0;
-            _timerIsRunning = false;
-            EventManager.Instance.onAnswerGiven.Invoke(false);
-        }
+
+        Debug.Log("Time has run out!");
+        timeRemaining = 0;
+        _timerIsRunning = false;
+        EventManager.Instance.onAnswerGiven.Invoke(false);
     }
 }
