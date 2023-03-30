@@ -1,3 +1,4 @@
+using Descriptors;
 using UnityEngine.Events;
 
 namespace Managers
@@ -9,6 +10,8 @@ namespace Managers
         public UnityEvent onVideoCompleted;
         public UnityEvent<string> onInterruptibleVideoStart;
         public UnityEvent onInterruptibleVideoCompleted;
+        public UnityEvent<QuizInterruptionDescriptor> onQuizStart;
+        public UnityEvent<bool> onAnswerGiven;
 
         protected override void Awake()
         {
@@ -18,6 +21,8 @@ namespace Managers
             onVideoCompleted = new UnityEvent();
             onInterruptibleVideoStart = new UnityEvent<string>();
             onInterruptibleVideoCompleted = new UnityEvent();
+            onQuizStart = new UnityEvent<QuizInterruptionDescriptor>();
+            onAnswerGiven = new UnityEvent<bool>();
         }
     }
 }

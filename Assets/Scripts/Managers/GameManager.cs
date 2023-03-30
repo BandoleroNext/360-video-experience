@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private float changeSceneFadeTime = 0.2f; 
+    [SerializeField] private float changeSceneFadeTime = 0.2f;
+    public AudioClip rightAnswerSound;
+    public AudioClip wrongAnswerSound;
     public void ChangeScene(int sceneIndex)
     {
         InterruptibleVideoController.DoFadeAndCallCallback(0, () =>
