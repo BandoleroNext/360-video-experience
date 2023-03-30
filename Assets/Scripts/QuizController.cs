@@ -28,6 +28,11 @@ public class QuizController : MonoBehaviour
         EventManager.Instance.onVideoPause.Invoke();
         var question = quizDescriptor.question;
         var answers = quizDescriptor.answers;
+        if (answers.Count is < 2 or > 4)
+        {
+            Debug.LogError("Number of answers wrong: answers should be between 2 and 4");
+            return;
+        }
         _listOfAnswerButtons = new List<GameObject>();
         CreateAndSetQuestion(question);
         foreach (var singleAnswer in answers)
