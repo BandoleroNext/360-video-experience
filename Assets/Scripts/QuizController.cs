@@ -13,6 +13,9 @@ public class QuizController : MonoBehaviour
     public GameObject answerButtonPrefab;
     public GameObject questionPrefab;
     private List<GameObject> _listOfAnswerButtons;
+    public bool timer;
+    public float timeRemaining = 10;
+    private bool _timerIsRunning = false;
 
     private void Start()
     {
@@ -75,6 +78,11 @@ public class QuizController : MonoBehaviour
             var answer = _listOfAnswerButtons[i];
             answer.transform.localPosition = positions[i];
         }
+
+        if (timer)
+        {
+            _timerIsRunning = true;
+        }
     }
 
     private void ContinueVideo(bool isCorrect)
@@ -86,5 +94,21 @@ public class QuizController : MonoBehaviour
         }
         Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
         EventManager.Instance.onVideoResume.Invoke();
+    }
+
+    private void Update()
+    {
+        if (!_timerIsRunning) return;
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            Debug.Log("Time has run out!");
+            timeRemaining = 0;
+            _timerIsRunning = false;
+            EventManager.Instance.onAnswerGiven.Invoke(false);
+        }
     }
 }

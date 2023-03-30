@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   answerButtonPrefab: {fileID: 7259185806894242604, guid: 09f10c33607a02b479043ca23abcf91c, type: 3}
   questionPrefab: {fileID: 1705200424196765707, guid: a90defef6d336bd479177f7a8d8c42bf, type: 3}
+  timer: 0
+  timeRemaining: 10
