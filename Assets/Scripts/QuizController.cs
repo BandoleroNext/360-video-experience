@@ -20,15 +20,21 @@ public class QuizController : MonoBehaviour
     private void QuizStart(QuizInterruptionDescriptor quizDescriptor)
     {
         EventManager.Instance.onVideoPause.Invoke();
+        var question = quizDescriptor.question;
         var answers = quizDescriptor.answers;
         _listOfAnswerButtons = new List<GameObject>();
+        CreateAndSetQuestion(question);
         foreach (var singleAnswer in answers)
         {
             CreateAndSetEachButton(singleAnswer);
         }
         PlaceAnswersIntoScene(); 
     }
-
+    
+    private void CreateAndSetQuestion(string question)
+    {
+        ;
+    }
 
     private void CreateAndSetEachButton(Answer singleAnswer)
     {
