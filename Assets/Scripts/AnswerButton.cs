@@ -25,7 +25,7 @@ public class AnswerButton : MonoBehaviour
         var answer = _quizAnswer.answer;
         GetComponentInChildren<TextMeshPro>().text = answer;
     }
-    
+
     private void UpdateSound()
     {
         var source = GetComponentInChildren<AudioSource>();
@@ -33,13 +33,11 @@ public class AnswerButton : MonoBehaviour
         {
             Debug.LogError("Audio Source not found in prefab");
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            source.clip = _quizAnswer.isCorrect
-                ? GameManager.Instance.rightAnswerSound
-                : GameManager.Instance.wrongAnswerSound;
-        }
+        source.clip = _quizAnswer.isCorrect
+            ? GameManager.Instance.rightAnswerSound
+            : GameManager.Instance.wrongAnswerSound;
     }
 
     public void UpdateCallBack()
