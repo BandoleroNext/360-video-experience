@@ -70,12 +70,12 @@ public class VideoController : MonoBehaviour
         videoPlayer.targetTexture = _renderTexture;
     }
 
-    protected void PauseVideo()
+    public void PauseVideo()
     {
         videoPlayer.Pause();
     }
 
-    protected void ResumeVideo()
+    public void ResumeVideo()
     {
         videoPlayer.Play();
     }

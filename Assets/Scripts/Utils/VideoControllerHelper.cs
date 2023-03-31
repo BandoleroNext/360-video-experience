@@ -6,17 +6,19 @@ using UnityEngine;
 
 namespace Utils
 {
-    public class VideoControllerHelper
+    public static class VideoControllerHelper
     {
         public static string GeneratePathToVideo(string url)
         {
             var persistentPath = Path.Combine(Application.persistentDataPath, url);
+            Debug.Log($"PERSISTENT - {persistentPath}");
             if (File.Exists(persistentPath))
                 return persistentPath;
             var streamingPath = Path.Combine(Application.streamingAssetsPath, url);
+            Debug.Log($"STREAMING - {streamingPath}");
             if (File.Exists(streamingPath))
                 return streamingPath;
-            if (File.Exists(url)||RemoteFileExists(url))
+            if (File.Exists(url) || RemoteFileExists(url))
                 return url;
             return "";
         }
@@ -43,16 +45,14 @@ namespace Utils
             DOTween.To(() => materialToUpdate.GetFloat(exposureId),
                 (value) => materialToUpdate.SetFloat(exposureId, value), targetExposure, fadeTime);
         }
-        
-        
-        public static void DoFadeAndCallCallback(float targetExposure, Action callback, float fadeTime, int exposureId,Material materialToUpdate)
+
+
+        public static void DoFadeAndCallCallback(float targetExposure, Action callback, float fadeTime, int exposureId,
+            Material materialToUpdate)
         {
             DOTween.To(() => materialToUpdate.GetFloat(exposureId),
                     (value) => materialToUpdate.SetFloat(exposureId, value), targetExposure, fadeTime)
                 .OnComplete(() => callback());
         }
     }
-    
-    
-
 }

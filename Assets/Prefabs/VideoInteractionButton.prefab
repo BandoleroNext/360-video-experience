@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 459838227338926794}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.001}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1006627837563900032}
@@ -116,8 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _editor: {fileID: 4187954457235651219}
-  _width: 0.4
-  _height: 0.4
+  _width: 0.2
+  _height: 0.2
   _color: {r: 0, g: 0.60784316, b: 0.54509807, a: 0.42745098}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.04
@@ -152,7 +152,7 @@ RectTransform:
   m_GameObject: {fileID: 1633533500865068945}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.001}
-  m_LocalScale: {x: 0.06186993, y: 0.06186993, z: 0.06186993}
+  m_LocalScale: {x: 0.00856363, y: 0.00856363, z: 0.00856363}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3757392399846101679}
@@ -693,7 +693,7 @@ RectTransform:
   m_GameObject: {fileID: 6141024655369521280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3757392399846101679}
@@ -785,8 +785,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _editor: {fileID: 4670466373373421159}
-  _width: 0.4
-  _height: 0.4
+  _width: 0.2
+  _height: 0.2
   _color: {r: 0, g: 0.60784316, b: 0.54509807, a: 0.42745098}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.04
@@ -1112,6 +1112,18 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5838548301936133033}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 5838548301936133033}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
