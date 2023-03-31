@@ -1,0 +1,82 @@
+using System;
+using Descriptors;
+using UnityEngine;
+using UnityEngine.Video;
+using Utils;
+
+[RequireComponent(typeof(VideoPlayer))]
+public class VideoController : MonoBehaviour
+{
+    public readonly int exposure = Shader.PropertyToID("_Exposure");
+    public Material targetMaterial;
+    [SerializeField] protected int renderTextureWidth = 4096;
+    [SerializeField] protected int renderTextureHeight = 2048;
+
+
+    private RenderTexture _renderTexture;
+    protected VideoPlayer videoPlayer;
+
+    protected void Start()
+    {
+        videoPlayer = GetComponent<VideoPlayer>();
+    }
+
+    public void StartVideo(string url)
+    {
+        var correctUrl = VideoControllerHelper.GeneratePathToVideo(url);
+        if (correctUrl == "")
+        {
+            Debug.LogError("VIDEO NOT FOUND ");
+            return;
+        }
+
+        CreateTextureAndSetupMaterial();
+        PrepareAndStartVideoPlayback(correctUrl);
+    }
+
+    private void PrepareAndStartVideoPlayback(string videoUrl)
+    {
+        videoPlayer.url = videoUrl;
+
+        if (!videoPlayer.isPrepared)
+        {
+            Debug.Log("TO PREPARE!");
+            videoPlayer.prepareCompleted += VideoPlayerOnPrepareCompleted;
+            videoPlayer.Prepare();
+        }
+        else
+        {
+            VideoPlayerOnPrepareCompleted(videoPlayer);
+        }
+    }
+
+    protected virtual void VideoPlayerOnPrepareCompleted(VideoPlayer source)
+    {
+        Debug.Log("READY");
+        Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
+        videoPlayer.Play();
+        videoPlayer.loopPointReached += EndVideo;
+    }
+
+    protected virtual void EndVideo(VideoPlayer player)
+    {
+        Debug.Log($"Video completed");
+    }
+
+    private void CreateTextureAndSetupMaterial()
+    {
+        _renderTexture = new RenderTexture(renderTextureWidth, renderTextureHeight, 32, RenderTextureFormat.ARGB32);
+        targetMaterial.mainTexture = _renderTexture;
+        videoPlayer.targetTexture = _renderTexture;
+    }
+
+    protected void PauseVideo()
+    {
+        videoPlayer.Pause();
+    }
+
+    protected void ResumeVideo()
+    {
+        videoPlayer.Play();
+    }
+}

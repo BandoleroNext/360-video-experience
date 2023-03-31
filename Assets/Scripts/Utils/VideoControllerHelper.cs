@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Net;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Utils
@@ -34,6 +36,20 @@ namespace Utils
                 Debug.LogError($"Video not found!");
                 return false;
             }
+        }
+
+        public static void DoFade(float targetExposure, float fadeTime, int exposureId, Material materialToUpdate)
+        {
+            DOTween.To(() => materialToUpdate.GetFloat(exposureId),
+                (value) => materialToUpdate.SetFloat(exposureId, value), targetExposure, fadeTime);
+        }
+        
+        
+        public static void DoFadeAndCallCallback(float targetExposure, Action callback, float fadeTime, int exposureId,Material materialToUpdate)
+        {
+            DOTween.To(() => materialToUpdate.GetFloat(exposureId),
+                    (value) => materialToUpdate.SetFloat(exposureId, value), targetExposure, fadeTime)
+                .OnComplete(() => callback());
         }
     }
     
