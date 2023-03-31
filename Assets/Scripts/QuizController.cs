@@ -12,10 +12,11 @@ public class QuizController : MonoBehaviour
 {
     public GameObject answerButtonPrefab;
     public GameObject questionPrefab;
-    private List<GameObject> _listOfAnswerButtons;
+    private List<GameObject> _answerButtons;
     public bool timer;
     public float timeRemaining = 10;
     private bool _timerIsRunning;
+    private GameObject _questionView;
 
     private void Start()
     {
@@ -31,36 +32,43 @@ public class QuizController : MonoBehaviour
         if (answers.Count is < 2 or > 4)
         {
             Debug.LogError("Number of answers wrong: answers should be between 2 and 4");
+            EventManager.Instance.onVideoResume.Invoke();
             return;
         }
-        _listOfAnswerButtons = new List<GameObject>();
+        _answerButtons = new List<GameObject>();
         CreateAndSetQuestion(question);
         foreach (var singleAnswer in answers)
         {
-            CreateAndSetEachButton(singleAnswer);
+            CreateAndSetButton(singleAnswer);
         }
         PlaceAnswersIntoScene();
+        
+        if (timer)
+        {
+            _timerIsRunning = true;
+        }
     }
 
     private void CreateAndSetQuestion(string question)
     {
-        var questionView = Instantiate(questionPrefab, new Vector3(0, 1.5f, 0.5f), Quaternion.identity);
-        questionView.name = "Question";
-        var questionText = questionView.GetComponentInChildren<TextMeshPro>();
+        _questionView = Instantiate(questionPrefab, new Vector3(0, 1.5f, 0.5f), Quaternion.identity);
+        _questionView.name = "Question";
+        var questionText = _questionView.GetComponentInChildren<TextMeshPro>();
         if (!questionText)
         {
            Debug.LogError("TextMeshPro missing in prefab");
            Destroy(gameObject);
+           EventManager.Instance.onVideoResume.Invoke();
            return;
         }
         questionText.text = question;
     }
 
-    private void CreateAndSetEachButton(Answer singleAnswer)
+    private void CreateAndSetButton(Answer singleAnswer)
     {
         var answerButton = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         answerButton.name = "Answer";
-        _listOfAnswerButtons.Add(answerButton);
+        _answerButtons.Add(answerButton);
         answerButton.GetComponent<AnswerButton>().Setup(singleAnswer);
     }
 
@@ -78,29 +86,24 @@ public class QuizController : MonoBehaviour
             new Vector3(-0.25f, 0.7f, 0.5f), new Vector3(0.25f, 0.7f, 0.5f)
         };
 
-        var positions = _listOfAnswerButtons.Count switch
+        var positions = _answerButtons.Count switch
         {
             2 => twoOptionsLocalPositions,
             3 => threeOptionsLocalPositions,
             _ => fourOptionsLocalPositions
         };
 
-        for (var i = 0; i < _listOfAnswerButtons.Count; i++)
+        for (var i = 0; i < _answerButtons.Count; i++)
         {
-            var answer = _listOfAnswerButtons[i];
+            var answer = _answerButtons[i];
             answer.transform.localPosition = positions[i];
-        }
-
-        if (timer)
-        {
-            _timerIsRunning = true;
         }
     }
 
     private void ContinueVideo(bool isCorrect)
     {
-        Destroy(GameObject.Find("Question"));
-        foreach (var t in _listOfAnswerButtons)
+        Destroy(_questionView);
+        foreach (var t in _answerButtons)
         {
             Destroy(t);
         }
