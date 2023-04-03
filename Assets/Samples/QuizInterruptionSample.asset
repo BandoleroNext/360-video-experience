@@ -15,11 +15,11 @@ MonoBehaviour:
   interruptAtPercentage: 30
   question: Question?
   answers:
-  - answer: Wrong answer#1
+  - answer: Right answer
+    isCorrect: 1
+  - answer: Wrong Answer#1
     isCorrect: 0
-  - answer: Right answer
-    isCorrect: 1
-  - answer: Right answer
-    isCorrect: 1
-  - answer: Right answer
-    isCorrect: 1
+  - answer: Wrong Answer#2
+    isCorrect: 0
+  - answer: Wrong Answer#3
+    isCorrect: 0
