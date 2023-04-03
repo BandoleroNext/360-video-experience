@@ -2,37 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class AnswerPanel : MonoBehaviour
 {
-    public void PlaceAnswersIntoScene(IReadOnlyList<AnswerButton> answerButtons, Transform quizPosition)
+    [SerializeField] private Transform[] answersTransforms;
+
+    public void PlaceAnswersIntoScene(IReadOnlyList<AnswerButton> answerButtons)
     {
-        var position = transform.localPosition;
-        var twoOptionsLocalPositions = new[]
-            { new Vector3(position.x-0.27f, position.y-0.4f, position.z), new Vector3(position.x+0.27f, position.y-0.4f, position.z) };
-
-        var threeOptionsLocalPositions = new[]
-            { new Vector3(position.x-0.27f, position.y-0.4f, position.z), new Vector3(position.x+0.27f, position.y-0.4f, position.z), new Vector3(position.x, position.y-0.8f, position.z) };
-
-        var fourOptionsLocalPositions = new[]
+        if (answersTransforms.Length < answerButtons.Count)
         {
-            new Vector3(position.x-0.27f, position.y-0.4f, position.z), new Vector3(position.x+0.27f, position.y-0.4f, position.z),
-            new Vector3(position.x-0.27f, position.y-0.8f, position.z), new Vector3(position.x+0.27f, position.y-0.8f, position.z)
-        };
-
-        var positions = answerButtons.Count switch
-        {
-            2 => twoOptionsLocalPositions,
-            3 => threeOptionsLocalPositions,
-            _ => fourOptionsLocalPositions
-        };
-
+            Debug.LogError("Insufficient number of slots in QuizPositionReference");
+            Destroy(gameObject);
+            return;
+        }
+        
         for (var i = 0; i < answerButtons.Count; i++)
         {
             var answer = answerButtons[i];
-            answer.transform.localPosition = positions[i];
-            answer.transform.LookAt(Vector3.zero);
-            answer.transform.Rotate(0,180,0);
+            var answerTransform = answer.transform;
+            answerTransform.position = answersTransforms[i].position;
+            answerTransform.rotation = answersTransforms[i].rotation;
         }
     }
 }

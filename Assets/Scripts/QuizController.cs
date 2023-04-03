@@ -21,11 +21,11 @@ public class QuizController : MonoBehaviour
     public Transform quizPosition;
 
     private TextMesh _timeText;
-    
+
     private List<AnswerButton> _answerButtons;
     private bool _timerIsRunning;
     private GameObject _questionView;
-    
+
 
     private void Start()
     {
@@ -44,19 +44,21 @@ public class QuizController : MonoBehaviour
             EventManager.Instance.onVideoResume.Invoke();
             return;
         }
+
         _answerButtons = new List<AnswerButton>();
         CreateAndSetQuestion(question);
         foreach (var singleAnswer in answers)
         {
             CreateAndSetButton(singleAnswer);
         }
-        GetComponentInChildren<AnswerPanel>().PlaceAnswersIntoScene(_answerButtons, quizPosition);
+
+        GetComponentInChildren<AnswerPanel>().PlaceAnswersIntoScene(_answerButtons);
 
         if (!timer) return;
         _timerIsRunning = true;
-                            
+
         _timeText = _questionView.GetComponentInChildren<TextMesh>();
-        
+
         if (_timeText) return;
         Debug.LogError("TextMesh for Timer missing in prefab");
         Destroy(gameObject);
@@ -65,8 +67,8 @@ public class QuizController : MonoBehaviour
 
     private void CreateAndSetQuestion(string question)
     {
-        quizPosition.LookAt(Vector3.zero);
-        quizPosition.Rotate(0,180,0);
+        quizPosition.LookAt(new Vector3(0, quizPosition.position.y, 0));
+        quizPosition.Rotate(0, 180, 0);
         _questionView = Instantiate(questionPrefab, quizPosition);
         _questionView.name = "Question";
         var questionText = _questionView.GetComponentInChildren<TextMeshPro>();
@@ -78,12 +80,13 @@ public class QuizController : MonoBehaviour
             EventManager.Instance.onVideoResume.Invoke();
             return;
         }
+
         questionText.text = question;
     }
 
     private void CreateAndSetButton(Answer singleAnswer)
     {
-        var answerButton = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        var answerButton = Instantiate(answerButtonPrefab, Vector3.zero, Quaternion.identity, transform);
         answerButton.name = "Answer";
         _answerButtons.Add(answerButton);
         answerButton.Setup(singleAnswer);
@@ -103,8 +106,7 @@ public class QuizController : MonoBehaviour
 
     private void DisplayTime(float timeToDisplay)
     {
-        timeToDisplay += 1;
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         _timeText.text = $"{minutes:00}:{seconds:00}";
     }
