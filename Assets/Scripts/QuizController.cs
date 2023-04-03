@@ -5,18 +5,24 @@ using System.Linq;
 using Descriptors;
 using Managers;
 using Oculus.Interaction;
+using Oculus.Interaction.Samples;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class QuizController : MonoBehaviour
 {
-    public GameObject answerButtonPrefab;
+    public AnswerButton answerButtonPrefab;
     public GameObject questionPrefab;
-    private List<GameObject> _answerButtons;
     public bool timer;
     public float timeRemaining = 10;
+    public Transform quizPosition;
+    
+    private List<AnswerButton> _answerButtons;
     private bool _timerIsRunning;
     private GameObject _questionView;
+    
 
     private void Start()
     {
@@ -35,13 +41,13 @@ public class QuizController : MonoBehaviour
             EventManager.Instance.onVideoResume.Invoke();
             return;
         }
-        _answerButtons = new List<GameObject>();
+        _answerButtons = new List<AnswerButton>();
         CreateAndSetQuestion(question);
         foreach (var singleAnswer in answers)
         {
             CreateAndSetButton(singleAnswer);
         }
-        PlaceAnswersIntoScene();
+        GetComponentInChildren<AnswerPanel>().PlaceAnswersIntoScene(_answerButtons, quizPosition);
         
         if (timer)
         {
@@ -51,7 +57,9 @@ public class QuizController : MonoBehaviour
 
     private void CreateAndSetQuestion(string question)
     {
-        _questionView = Instantiate(questionPrefab, new Vector3(0, 1.5f, 0.5f), Quaternion.identity);
+        quizPosition.LookAt(Vector3.zero);
+        quizPosition.Rotate(0,180,0);
+        _questionView = Instantiate(questionPrefab, quizPosition);
         _questionView.name = "Question";
         var questionText = _questionView.GetComponentInChildren<TextMeshPro>();
         if (!questionText)
@@ -69,35 +77,7 @@ public class QuizController : MonoBehaviour
         var answerButton = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         answerButton.name = "Answer";
         _answerButtons.Add(answerButton);
-        answerButton.GetComponent<AnswerButton>().Setup(singleAnswer);
-    }
-
-    private void PlaceAnswersIntoScene()
-    {
-        var twoOptionsLocalPositions = new[]
-            { new Vector3(-0.25f, 1, 0.5f), new Vector3(0.25f, 1, 0.5f) };
-
-        var threeOptionsLocalPositions = new[]
-            { new Vector3(-0.25f, 1.13f, 0.5f), new Vector3(0.25f, 1.13f, 0.5f), new Vector3(0, 0.7f, 0.5f) };
-
-        var fourOptionsLocalPositions = new[]
-        {
-            new Vector3(-0.25f, 1.13f, 0.5f), new Vector3(0.25f, 1.13f, 0.5f),
-            new Vector3(-0.25f, 0.7f, 0.5f), new Vector3(0.25f, 0.7f, 0.5f)
-        };
-
-        var positions = _answerButtons.Count switch
-        {
-            2 => twoOptionsLocalPositions,
-            3 => threeOptionsLocalPositions,
-            _ => fourOptionsLocalPositions
-        };
-
-        for (var i = 0; i < _answerButtons.Count; i++)
-        {
-            var answer = _answerButtons[i];
-            answer.transform.localPosition = positions[i];
-        }
+        answerButton.Setup(singleAnswer);
     }
 
     private void ContinueVideo(bool isCorrect)
@@ -105,7 +85,7 @@ public class QuizController : MonoBehaviour
         Destroy(_questionView);
         foreach (var t in _answerButtons)
         {
-            Destroy(t);
+            Destroy(t.GameObject());
         }
 
         Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
