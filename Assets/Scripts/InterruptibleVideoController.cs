@@ -65,23 +65,24 @@ public class InterruptibleVideoController : MonoBehaviour
         if (File.Exists(streamingPath))
             return streamingPath;
         //if http ok, altrimenti cerco in streaming
-        if (File.Exists(url)||RemoteFileExists(url))
+        if (File.Exists(url) || RemoteFileExists(url))
             return url;
         return "";
     }
+
     private void VideoResume()
     {
-        DoFadeAndCallCallback(fadeResume, () => { _videoPlayer.Play(); },fadeTime);
+        DoFadeAndCallCallback(fadeResume, () => { _videoPlayer.Play(); }, fadeTime);
     }
 
     private void VideoPause()
     {
-        DoFadeAndCallCallback(fadePause, () => { _videoPlayer.Pause(); },fadeTime);
+        DoFadeAndCallCallback(fadePause, () => { _videoPlayer.Pause(); }, fadeTime);
     }
 
     private void CreateTextureAndSetupMaterial()
     {
-        _renderTexture = new RenderTexture(renderTextureWidth,renderTextureHeight,32, RenderTextureFormat.ARGB32);
+        _renderTexture = new RenderTexture(renderTextureWidth, renderTextureHeight, 32, RenderTextureFormat.ARGB32);
         targetMaterial.SetFloat(_exposure, 0f);
         targetMaterial.mainTexture = _renderTexture;
         _videoPlayer.targetTexture = _renderTexture;
@@ -132,15 +133,12 @@ public class InterruptibleVideoController : MonoBehaviour
     {
         Debug.Log("READY");
         Debug.Log($"Video Playback: {source.width}:{source.height}@{source.frameRate}");
-        var interruptionController = new InterruptionController(interruptibleVideoDescriptor.interruptions,source);
+        var interruptionController = new InterruptionController(interruptibleVideoDescriptor.interruptions, source);
     }
 
     private void VideoCompleted(VideoPlayer vp)
     {
         Debug.Log("Video has ended");
-        DoFadeAndCallCallback(0, () =>
-        {
-            EventManager.Instance.onVideoCompleted.Invoke();
-        }, fadeTime);
+        DoFadeAndCallCallback(0, () => { EventManager.Instance.onVideoCompleted.Invoke(); }, fadeTime);
     }
 }
