@@ -9,6 +9,7 @@ using Oculus.Interaction.Samples;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class QuizController : MonoBehaviour
@@ -18,6 +19,8 @@ public class QuizController : MonoBehaviour
     public bool timer;
     public float timeRemaining = 10;
     public Transform quizPosition;
+
+    private TextMesh _timeText;
     
     private List<AnswerButton> _answerButtons;
     private bool _timerIsRunning;
@@ -48,11 +51,16 @@ public class QuizController : MonoBehaviour
             CreateAndSetButton(singleAnswer);
         }
         GetComponentInChildren<AnswerPanel>().PlaceAnswersIntoScene(_answerButtons, quizPosition);
+
+        if (!timer) return;
+        _timerIsRunning = true;
+                            
+        _timeText = _questionView.GetComponentInChildren<TextMesh>();
         
-        if (timer)
-        {
-            _timerIsRunning = true;
-        }
+        if (_timeText) return;
+        Debug.LogError("TextMesh for Timer missing in prefab");
+        Destroy(gameObject);
+        EventManager.Instance.onVideoResume.Invoke();
     }
 
     private void CreateAndSetQuestion(string question)
@@ -62,12 +70,13 @@ public class QuizController : MonoBehaviour
         _questionView = Instantiate(questionPrefab, quizPosition);
         _questionView.name = "Question";
         var questionText = _questionView.GetComponentInChildren<TextMeshPro>();
+
         if (!questionText)
         {
-           Debug.LogError("TextMeshPro missing in prefab");
-           Destroy(gameObject);
-           EventManager.Instance.onVideoResume.Invoke();
-           return;
+            Debug.LogError("TextMeshPro missing in prefab");
+            Destroy(gameObject);
+            EventManager.Instance.onVideoResume.Invoke();
+            return;
         }
         questionText.text = question;
     }
@@ -92,12 +101,21 @@ public class QuizController : MonoBehaviour
         EventManager.Instance.onVideoResume.Invoke();
     }
 
+    private void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        _timeText.text = $"{minutes:00}:{seconds:00}";
+    }
+
     private void Update()
     {
         if (!_timerIsRunning) return;
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
+            DisplayTime(timeRemaining);
             return;
         }
 
