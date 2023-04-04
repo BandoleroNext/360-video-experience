@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Descriptors;
 using Managers;
-using Oculus.Interaction;
-using Oculus.Interaction.Samples;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
