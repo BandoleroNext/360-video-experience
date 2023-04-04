@@ -35,13 +35,13 @@ public class QuizController : MonoBehaviour
 
     private void QuizStart(QuizInterruptionDescriptor quizDescriptor)
     {
-        EventManager.Instance.onVideoPause.Invoke();
+        EventManager.Instance.onInterruptibleVideoPause.Invoke();
         var question = quizDescriptor.question;
         var answers = quizDescriptor.answers;
         if (answers.Count is < 2 or > 4)
         {
             Debug.LogError("Number of answers wrong: answers should be between 2 and 4");
-            EventManager.Instance.onVideoResume.Invoke();
+            EventManager.Instance.onInterruptibleVideoResume.Invoke();
             return;
         }
 
@@ -62,7 +62,7 @@ public class QuizController : MonoBehaviour
         if (_timeText) return;
         Debug.LogError("TextMesh for Timer missing in prefab");
         Destroy(gameObject);
-        EventManager.Instance.onVideoResume.Invoke();
+        EventManager.Instance.onInterruptibleVideoResume.Invoke();
     }
 
     private void CreateAndSetQuestion(string question)
@@ -77,7 +77,7 @@ public class QuizController : MonoBehaviour
         {
             Debug.LogError("TextMeshPro missing in prefab");
             Destroy(gameObject);
-            EventManager.Instance.onVideoResume.Invoke();
+            EventManager.Instance.onInterruptibleVideoResume.Invoke();
             return;
         }
 
@@ -101,7 +101,7 @@ public class QuizController : MonoBehaviour
         }
 
         Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
-        EventManager.Instance.onVideoResume.Invoke();
+        EventManager.Instance.onInterruptibleVideoResume.Invoke();
     }
 
     private void DisplayTime(float timeToDisplay)
