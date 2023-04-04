@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dab2ebd5cf2a4a44a09442109ba3727, type: 3}
   m_Name: QuizInterruptionSample
   m_EditorClassIdentifier: 
-  interruptAtPercentage: 10
+  interruptAtPercentage: 30
   question: Question?
   answers:
-  - answer: Wrong answer#1
-    isCorrect: 0
   - answer: Right answer
     isCorrect: 1
-  - answer: Wrong answer#2
+  - answer: Wrong Answer#1
     isCorrect: 0
-  - answer: Wrong answer#3
+  - answer: Wrong Answer#2
+    isCorrect: 0
+  - answer: Wrong Answer#3
     isCorrect: 0
