@@ -1,12 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Utils
 {
@@ -23,7 +16,7 @@ namespace Utils
             if (File.Exists(streamingPath))
                 return streamingPath;
             Debug.Log($"ABSOLUTE PATH OR URL - {url}");
-            if(File.Exists(url) || url.StartsWith("http"))
+            if (File.Exists(url) || url.StartsWith("http"))
                 return url;
             return "";
         }

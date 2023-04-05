@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Managers
@@ -15,7 +12,7 @@ namespace Managers
 
         public static void ChangeScene(string sceneName)
         {
-            EventManager.onSceneChange.Invoke();
+            EventManager.OnSceneChange.Invoke();
             SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         }
     }

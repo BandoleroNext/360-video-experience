@@ -1,18 +1,17 @@
 using Descriptors;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Managers
 {
-    public class EventManager
+    public static class EventManager
     {
-        public static UnityEvent onSceneChange = new UnityEvent();
-        public static UnityEvent onInterruptibleVideoPause = new UnityEvent();
-        public static UnityEvent onInterruptibleVideoResume = new UnityEvent();
-        public static UnityEvent onVideoCompleted = new UnityEvent();
-        public static UnityEvent<string> onInterruptionVideoStart = new UnityEvent<string>();
-        public static UnityEvent onInterruptionVideoCompleted = new UnityEvent();
-        public static UnityEvent<QuizInterruptionDescriptor> onQuizStart = new UnityEvent<QuizInterruptionDescriptor>();
-        public static UnityEvent<bool> onAnswerGiven = new UnityEvent<bool>();
+        public static readonly UnityEvent OnSceneChange = new UnityEvent();
+        public static readonly UnityEvent OnInterruptibleVideoPause = new UnityEvent();
+        public static readonly UnityEvent OnInterruptibleVideoResume = new UnityEvent();
+        public static readonly UnityEvent OnVideoCompleted = new UnityEvent();
+        public static readonly UnityEvent<string> OnInterruptionVideoStart = new UnityEvent<string>();
+        public static readonly UnityEvent OnInterruptionVideoCompleted = new UnityEvent();
+        public static readonly UnityEvent<QuizInterruptionDescriptor> OnQuizStart = new UnityEvent<QuizInterruptionDescriptor>();
+        public static readonly UnityEvent<bool> OnAnswerGiven = new UnityEvent<bool>();
     }
 }
