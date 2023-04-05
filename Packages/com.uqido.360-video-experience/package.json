@@ -1,0 +1,28 @@
+{
+    "name": "com.uqido.360-video-experience",
+    "version": "1.0.0",
+    "displayName": "360 Video Experience",
+    "description": "This package helps you create a 360 video experience",
+    "unity": "2021.3",
+    "unityRelease": "21f1",
+    "documentationUrl": "https://github.com/Uqido/360-video-experience",
+    "changelogUrl": "https://github.com/Uqido/360-video-experience",
+    "licensesUrl": "https://github.com/Uqido/360-video-experience",
+    "dependencies": {
+        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+        "com.unity.textmeshpro": "3.0.6"
+    },
+    "samples": [
+        {
+            "displayName": "Descriptors Samples",
+            "description": "Contains sample descriptors for videos, interruptions and quizzes",
+            "path": "Samples~/SampleDescriptors"
+        }
+    ],
+    "keywords": [],
+    "author": {
+        "name": "Uqido",
+        "email": "xr@uqido.com",
+        "url": "https://www.uqido.com/"
+    }
+}
