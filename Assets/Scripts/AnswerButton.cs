@@ -10,6 +10,8 @@ using UnityEngine;
 
 public class AnswerButton : MonoBehaviour
 {
+    [SerializeField] private AudioClip rightAnswerSound;
+    [SerializeField] private AudioClip wrongAnswerSound;
     private Answer _quizAnswer;
 
     public void Setup(Answer quizAnswer)
@@ -35,8 +37,8 @@ public class AnswerButton : MonoBehaviour
             return;
         }
         source.clip = _quizAnswer.isCorrect
-            ? GameManager.Instance.rightAnswerSound
-            : GameManager.Instance.wrongAnswerSound;
+            ? rightAnswerSound
+            : wrongAnswerSound;
     }
 
     public void UpdateCallBack()

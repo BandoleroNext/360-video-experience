@@ -21,14 +21,12 @@ public class DebugInteraction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Debug.Log("Going to Video Scene");
-            GameManager.Instance.ChangeScene(0);
+            SceneChanger.ChangeScene(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log("Going to Menu Scene");
-            GameManager.Instance.ChangeScene("TestMenuScene");
-        }
+        if (!Input.GetKeyDown(KeyCode.T)) return;
+        Debug.Log("Going to Menu Scene");
+        SceneChanger.ChangeScene("TestMenuScene");
     }
 #endif
 }

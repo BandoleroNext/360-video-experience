@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Managers
 {
-    public class GameManager
+    public abstract class SceneChanger
     {
         public static void ChangeScene(int sceneIndex)
         {
