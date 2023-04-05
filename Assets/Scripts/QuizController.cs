@@ -27,19 +27,19 @@ public class QuizController : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.onQuizStart.AddListener(QuizStart);
-        EventManager.Instance.onAnswerGiven.AddListener(ContinueVideo);
+        EventManager.onQuizStart.AddListener(QuizStart);
+        EventManager.onAnswerGiven.AddListener(ContinueVideo);
     }
 
     private void QuizStart(QuizInterruptionDescriptor quizDescriptor)
     {
-        EventManager.Instance.onInterruptibleVideoPause.Invoke();
+        EventManager.onInterruptibleVideoPause.Invoke();
         var question = quizDescriptor.question;
         var answers = quizDescriptor.answers;
         if (answers.Count is < 2 or > 4)
         {
             Debug.LogError("Number of answers wrong: answers should be between 2 and 4");
-            EventManager.Instance.onInterruptibleVideoResume.Invoke();
+            EventManager.onInterruptibleVideoResume.Invoke();
             return;
         }
 
@@ -60,7 +60,7 @@ public class QuizController : MonoBehaviour
         if (_timeText) return;
         Debug.LogError("TextMesh for Timer missing in prefab");
         Destroy(gameObject);
-        EventManager.Instance.onInterruptibleVideoResume.Invoke();
+        EventManager.onInterruptibleVideoResume.Invoke();
     }
 
     private void CreateAndSetQuestion(string question)
@@ -75,7 +75,7 @@ public class QuizController : MonoBehaviour
         {
             Debug.LogError("TextMeshPro missing in prefab");
             Destroy(gameObject);
-            EventManager.Instance.onInterruptibleVideoResume.Invoke();
+            EventManager.onInterruptibleVideoResume.Invoke();
             return;
         }
 
@@ -99,7 +99,7 @@ public class QuizController : MonoBehaviour
         }
 
         Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
-        EventManager.Instance.onInterruptibleVideoResume.Invoke();
+        EventManager.onInterruptibleVideoResume.Invoke();
     }
 
     private void DisplayTime(float timeToDisplay)
@@ -122,6 +122,6 @@ public class QuizController : MonoBehaviour
         Debug.Log("Time has run out!");
         timeRemaining = 0;
         _timerIsRunning = false;
-        EventManager.Instance.onAnswerGiven.Invoke(false);
+        EventManager.onAnswerGiven.Invoke(false);
     }
 }

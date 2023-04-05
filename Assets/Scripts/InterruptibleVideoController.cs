@@ -14,16 +14,16 @@ public class InterruptibleVideoController : VideoController
     private new void Start()
     {
         base.Start();
-        EventManager.Instance.onInterruptibleVideoResume.AddListener(ResumeVideo);
-        EventManager.Instance.onInterruptibleVideoPause.AddListener(PauseVideo);
-        EventManager.Instance.onInterruptionVideoStart.AddListener(InterruptVideo);
-        EventManager.Instance.onInterruptionVideoCompleted.AddListener(ResumeVideo);
+        EventManager.onInterruptibleVideoResume.AddListener(ResumeVideo);
+        EventManager.onInterruptibleVideoPause.AddListener(PauseVideo);
+        EventManager.onInterruptionVideoStart.AddListener(InterruptVideo);
+        EventManager.onInterruptionVideoCompleted.AddListener(ResumeVideo);
         StartVideo(interruptibleVideoDescriptor.video.url);
     }
 
     private void InterruptVideo(string interruptionUrl)
     {
-        EventManager.Instance.onInterruptibleVideoPause.Invoke();
+        EventManager.onInterruptibleVideoPause.Invoke();
     }
 
     protected override void VideoPlayerOnPrepareCompleted(VideoPlayer source)
@@ -35,6 +35,6 @@ public class InterruptibleVideoController : VideoController
     protected override void EndVideo(VideoPlayer vp)
     {
         base.EndVideo(vp);
-        EventManager.Instance.onVideoCompleted.Invoke();
+        EventManager.onVideoCompleted.Invoke();
     }
 }

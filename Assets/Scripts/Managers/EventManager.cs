@@ -4,28 +4,15 @@ using UnityEngine.Serialization;
 
 namespace Managers
 {
-    public class EventManager : Singleton<EventManager>
+    public class EventManager
     {
-        public UnityEvent onSceneChange;
-        [FormerlySerializedAs("onVideoPause")] public UnityEvent onInterruptibleVideoPause;
-        [FormerlySerializedAs("onVideoResume")] public UnityEvent onInterruptibleVideoResume;
-        public UnityEvent onVideoCompleted;
-        [FormerlySerializedAs("onInterruptibleVideoStart")] public UnityEvent<string> onInterruptionVideoStart;
-        [FormerlySerializedAs("onInterruptibleVideoCompleted")] public UnityEvent onInterruptionVideoCompleted;
-        public UnityEvent<QuizInterruptionDescriptor> onQuizStart;
-        public UnityEvent<bool> onAnswerGiven;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            onSceneChange = new UnityEvent();
-            onInterruptibleVideoPause = new UnityEvent();
-            onInterruptibleVideoResume = new UnityEvent();
-            onVideoCompleted = new UnityEvent();
-            onInterruptionVideoStart = new UnityEvent<string>();
-            onInterruptionVideoCompleted = new UnityEvent();
-            onQuizStart = new UnityEvent<QuizInterruptionDescriptor>();
-            onAnswerGiven = new UnityEvent<bool>();
-        }
+        public static UnityEvent onSceneChange = new UnityEvent();
+        public static UnityEvent onInterruptibleVideoPause = new UnityEvent();
+        public static UnityEvent onInterruptibleVideoResume = new UnityEvent();
+        public static UnityEvent onVideoCompleted = new UnityEvent();
+        public static UnityEvent<string> onInterruptionVideoStart = new UnityEvent<string>();
+        public static UnityEvent onInterruptionVideoCompleted = new UnityEvent();
+        public static UnityEvent<QuizInterruptionDescriptor> onQuizStart = new UnityEvent<QuizInterruptionDescriptor>();
+        public static UnityEvent<bool> onAnswerGiven = new UnityEvent<bool>();
     }
 }

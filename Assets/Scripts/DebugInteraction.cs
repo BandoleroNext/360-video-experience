@@ -10,12 +10,12 @@ public class DebugInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            EventManager.Instance.onInterruptibleVideoPause.Invoke();
+            EventManager.onInterruptibleVideoPause.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            EventManager.Instance.onInterruptibleVideoResume.Invoke();
+            EventManager.onInterruptibleVideoResume.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.R))

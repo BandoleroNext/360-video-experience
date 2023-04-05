@@ -41,12 +41,12 @@ public class InterruptionController
                 case InterruptionVideoDescriptor videoInterruption:
                     Debug.Log(
                         $"Video interruption {videoInterruption.video.title}, pausing 360 video at {_currentVideoPlayer.frame}");
-                    EventManager.Instance.onInterruptionVideoStart.Invoke(videoInterruption.video.url);
+                    EventManager.onInterruptionVideoStart.Invoke(videoInterruption.video.url);
                     break;
                 case QuizInterruptionDescriptor quizInterruption:
                     Debug.Log(
                         $"Quiz interruption {quizInterruption}, pausing 360 video at {_currentVideoPlayer.frame}");
-                    EventManager.Instance.onQuizStart.Invoke(quizInterruption);
+                    EventManager.onQuizStart.Invoke(quizInterruption);
                     break;
             }
         }

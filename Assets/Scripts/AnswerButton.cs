@@ -43,6 +43,6 @@ public class AnswerButton : MonoBehaviour
 
     public void UpdateCallBack()
     {
-        EventManager.Instance.onAnswerGiven.Invoke(_quizAnswer.isCorrect);
+        EventManager.onAnswerGiven.Invoke(_quizAnswer.isCorrect);
     }
 }

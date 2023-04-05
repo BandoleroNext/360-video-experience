@@ -1,7 +1,12 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Utils
 {
@@ -17,26 +22,10 @@ namespace Utils
             Debug.Log($"STREAMING - {streamingPath}");
             if (File.Exists(streamingPath))
                 return streamingPath;
-            if (File.Exists(url) || RemoteFileExists(url))
+            Debug.Log($"ABSOLUTE PATH OR URL - {url}");
+            if(File.Exists(url) || url.StartsWith("http"))
                 return url;
             return "";
-        }
-
-        private static bool RemoteFileExists(string url)
-        {
-            try
-            {
-                if (WebRequest.Create(url) is not HttpWebRequest request) return false;
-                request.Method = "HEAD";
-                if (request.GetResponse() is not HttpWebResponse response) return false;
-                response.Close();
-                return (response.StatusCode == HttpStatusCode.OK);
-            }
-            catch
-            {
-                Debug.LogError($"Video not found!");
-                return false;
-            }
         }
     }
 }

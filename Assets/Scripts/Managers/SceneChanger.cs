@@ -15,7 +15,7 @@ namespace Managers
 
         public static void ChangeScene(string sceneName)
         {
-            EventManager.Instance.onSceneChange.Invoke();
+            EventManager.onSceneChange.Invoke();
             SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         }
     }

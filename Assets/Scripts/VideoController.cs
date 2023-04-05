@@ -1,5 +1,6 @@
 using System;
 using Descriptors;
+using Managers;
 using UnityEngine;
 using UnityEngine.Video;
 using Utils;
@@ -21,7 +22,7 @@ public class VideoController : MonoBehaviour
         videoPlayer = GetComponent<VideoPlayer>();
     }
 
-    public void StartVideo(string url)
+    protected void StartVideo(string url)
     {
         var correctUrl = VideoControllerHelper.GeneratePathToVideo(url);
         if (correctUrl == "")
@@ -42,12 +43,20 @@ public class VideoController : MonoBehaviour
         {
             Debug.Log("TO PREPARE!");
             videoPlayer.prepareCompleted += VideoPlayerOnPrepareCompleted;
+            videoPlayer.errorReceived += VideoPlayerOnerrorReceived;
             videoPlayer.Prepare();
         }
         else
         {
             VideoPlayerOnPrepareCompleted(videoPlayer);
         }
+    }
+
+    private static void VideoPlayerOnerrorReceived(VideoPlayer source, string message)
+    {
+        Debug.LogError("There were some issue with the URL of the video");
+        Debug.LogError("Sending the OnVideoCompleted Event");
+        EventManager.onVideoCompleted.Invoke();
     }
 
     protected virtual void VideoPlayerOnPrepareCompleted(VideoPlayer source)

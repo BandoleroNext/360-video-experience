@@ -17,7 +17,7 @@ public class InteractiveVideoController : VideoController
     {
         base.Start();
         screenParent.SetActive(false);
-        EventManager.Instance.onInterruptionVideoStart.AddListener(StartVideo);
+        EventManager.onInterruptionVideoStart.AddListener(StartVideo);
     }
 
     private new void StartVideo(string url)
@@ -34,7 +34,7 @@ public class InteractiveVideoController : VideoController
     protected override void EndVideo(VideoPlayer source)
     {
         screenParent.SetActive(false);
-        EventManager.Instance.onInterruptionVideoCompleted.Invoke();
+        EventManager.onInterruptionVideoCompleted.Invoke();
     }
 
     public void SkipFrames(bool skipAhead)
