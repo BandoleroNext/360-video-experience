@@ -17,6 +17,11 @@
             "displayName": "Descriptors Samples",
             "description": "Contains sample descriptors for videos, interruptions and quizzes",
             "path": "Samples~/SampleDescriptors"
+        },
+        {
+            "displayName": "Prefabs Samples",
+            "description": "Contains sample prefabs",
+            "path": "Samples~/SamplePrefabs"
         }
     ],
     "keywords": [],
