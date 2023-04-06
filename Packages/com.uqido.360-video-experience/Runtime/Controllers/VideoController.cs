@@ -11,8 +11,7 @@ namespace Controllers
         public Material targetMaterial;
         [SerializeField] protected int renderTextureWidth = 4096;
         [SerializeField] protected int renderTextureHeight = 2048;
-
-
+        
         private RenderTexture _renderTexture;
         protected VideoPlayer videoPlayer;
 

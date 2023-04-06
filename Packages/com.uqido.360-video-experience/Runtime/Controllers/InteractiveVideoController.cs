@@ -4,7 +4,6 @@ using UnityEngine.Video;
 
 namespace Controllers
 {
-    [RequireComponent(typeof(VideoPlayer))]
     public class InteractiveVideoController : VideoController
     {
         [SerializeField] private GameObject screenParent;

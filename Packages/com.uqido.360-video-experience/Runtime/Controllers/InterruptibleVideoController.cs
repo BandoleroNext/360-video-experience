@@ -15,6 +15,13 @@ namespace Controllers
             EventManager.OnInterruptibleVideoPause.AddListener(PauseVideo);
             EventManager.OnInterruptionVideoStart.AddListener(InterruptVideo);
             EventManager.OnInterruptionVideoCompleted.AddListener(ResumeVideo);
+            if (interruptibleVideoDescriptor != null)
+                StartVideo(interruptibleVideoDescriptor.video.url);
+        }
+
+        public void SetVideoDescriptorAndStart(InterruptibleVideoDescriptor descriptor)
+        {
+            interruptibleVideoDescriptor = descriptor;
             StartVideo(interruptibleVideoDescriptor.video.url);
         }
 
