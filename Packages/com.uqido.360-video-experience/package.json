@@ -12,6 +12,16 @@
         "com.cysharp.unitask": "2.3.3",
         "com.unity.textmeshpro": "3.0.6"
     },
+    "scopedRegistries": [
+        {
+          "name": "package.openupm.com",
+          "url": "https://package.openupm.com",
+          "scopes": [
+            "com.cysharp.unitask",
+            "com.openupm"
+          ]
+        }
+      ],
     "samples": [
         {
             "displayName": "Descriptors Samples",
