@@ -34,6 +34,7 @@ namespace Controllers
         {
             base.VideoPlayerOnPrepareCompleted(source);
             var interruptionController = new InterruptionController(interruptibleVideoDescriptor.interruptions, source);
+            StartCoroutine(interruptionController.ManageInterruptions());
         }
 
         protected override void EndVideo(VideoPlayer vp)

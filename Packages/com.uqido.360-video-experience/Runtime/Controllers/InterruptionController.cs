@@ -1,6 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Descriptors;
 using Managers;
 using UnityEngine;
@@ -28,14 +28,13 @@ namespace Controllers
             if (orderedInterruptions.Count != _interruptions.Count)
                 Debug.LogWarning(
                     $"Some interruptions with the same percentage were found. Only the last one with the same percentage will be used. Update the percentage to be different");
-            ManageInterruptions();
         }
 
-        private async void ManageInterruptions()
+        public IEnumerator ManageInterruptions()
         {
             foreach (var key in _interruptions.Keys)
             {
-                await UniTask.WaitUntil(() => _currentVideoPlayer.frame >= key);
+                yield return new WaitUntil(() => _currentVideoPlayer.frame >= key);
                 var interruption = _interruptions[key];
                 switch (interruption)
                 {

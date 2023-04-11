@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.cysharp.unitask": {
-      "version": "2.3.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
-    },
     "com.unity.collab-proxy": {
       "version": "2.0.1",
       "depth": 0,
@@ -147,7 +140,6 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.cysharp.unitask": "2.3.3",
         "com.unity.textmeshpro": "3.0.6"
       }
     },
