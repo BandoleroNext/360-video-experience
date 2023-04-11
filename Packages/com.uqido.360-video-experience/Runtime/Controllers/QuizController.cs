@@ -18,6 +18,7 @@ namespace Controllers
 
         private TextMesh _timeText;
 
+        private float _timerValue;
         private List<AnswerButton> _answerButtons;
         private bool _timerIsRunning;
         private GameObject _questionView;
@@ -32,6 +33,7 @@ namespace Controllers
         private void QuizStart(QuizInterruptionDescriptor quizDescriptor)
         {
             EventManager.OnInterruptibleVideoPause.Invoke();
+            _timerValue = timeRemaining;
             var question = quizDescriptor.question;
             var answers = quizDescriptor.answers;
             if (answers.Count is < 2 or > 4)
@@ -110,15 +112,15 @@ namespace Controllers
         private void Update()
         {
             if (!_timerIsRunning) return;
-            if (timeRemaining > 0)
+            if (_timerValue > 0)
             {
-                timeRemaining -= Time.deltaTime;
-                DisplayTime(timeRemaining);
+                _timerValue -= Time.deltaTime;
+                DisplayTime(_timerValue);
                 return;
             }
 
             Debug.Log("Time has run out!");
-            timeRemaining = 0;
+            _timerValue = 0;
             _timerIsRunning = false;
             EventManager.OnAnswerGiven.Invoke(false);
         }
