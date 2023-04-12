@@ -92,6 +92,7 @@ namespace Controllers
 
         private void ContinueVideo(bool isCorrect)
         {
+            _timerIsRunning = false;
             Destroy(_questionView);
             foreach (var t in _answerButtons)
             {
