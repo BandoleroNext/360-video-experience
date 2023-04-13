@@ -21,8 +21,7 @@ namespace Tests.Runtime
         public void Setup()
         {
             //CREATE CONTROLLER
-            _testController = (Object.Instantiate(new GameObject("testController") as Object) as GameObject)
-                ?.AddComponent<InterruptibleVideoController>();
+            _testController = new GameObject("testController").AddComponent<InterruptibleVideoController>();
             //CREATE DESCRIPTOR
             _testDescriptor = ScriptableObject.CreateInstance<InterruptibleVideoDescriptor>();
             _testDescriptor.interruptions = new List<InterruptionDescriptor>();

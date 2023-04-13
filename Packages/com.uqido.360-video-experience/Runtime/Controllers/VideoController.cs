@@ -11,16 +11,17 @@ namespace Controllers
         public Material targetMaterial;
         [SerializeField] protected int renderTextureWidth = 4096;
         [SerializeField] protected int renderTextureHeight = 2048;
+        [SerializeField] private int secondsToSkip;
         
         private RenderTexture _renderTexture;
         protected VideoPlayer videoPlayer;
 
-        protected void Start()
+        protected virtual void Start()
         {
             videoPlayer = GetComponent<VideoPlayer>();
         }
 
-        protected void StartVideo(string url)
+        public virtual void StartVideo(string url)
         {
             var correctUrl = VideoControllerHelper.GeneratePathToVideo(url);
             if (correctUrl == "")
@@ -30,31 +31,23 @@ namespace Controllers
             }
 
             CreateTextureAndSetupMaterial();
-            PrepareAndStartVideoPlayback(correctUrl);
+            SetupVideoPlayer(correctUrl);
         }
 
-        private void PrepareAndStartVideoPlayback(string videoUrl)
+        private void SetupVideoPlayer(string videoUrl)
         {
             videoPlayer.url = videoUrl;
-
-            if (!videoPlayer.isPrepared)
-            {
-                Debug.Log("TO PREPARE!");
-                videoPlayer.prepareCompleted += VideoPlayerOnPrepareCompleted;
-                videoPlayer.errorReceived += VideoPlayerOnerrorReceived;
-                videoPlayer.Prepare();
-            }
-            else
-            {
-                VideoPlayerOnPrepareCompleted(videoPlayer);
-            }
+            Debug.Log("TO PREPARE!");
+            videoPlayer.prepareCompleted += VideoPlayerOnPrepareCompleted;
+            videoPlayer.errorReceived += VideoPlayerOnerrorReceived;
+            videoPlayer.Prepare();
         }
 
         private static void VideoPlayerOnerrorReceived(VideoPlayer source, string message)
         {
             Debug.LogError("There were some issue with the URL of the video");
             Debug.LogError("Sending the OnVideoCompleted Event");
-            EventManager.OnVideoCompleted.Invoke();
+            EventManager.OnInterruptibleVideoCompleted.Invoke();
         }
 
         protected virtual void VideoPlayerOnPrepareCompleted(VideoPlayer source)
@@ -85,6 +78,20 @@ namespace Controllers
         public void ResumeVideo()
         {
             videoPlayer.Play();
+        }
+
+        public void SkipFrames(bool skipAhead)
+        {
+            var framesToSkip = (skipAhead ? 1 : -1) * (long)videoPlayer.frameRate * secondsToSkip;
+            var currentFrame = videoPlayer.frame;
+            var newFrame = (long)Mathf.Clamp(currentFrame + framesToSkip, 0, videoPlayer.frameCount);
+            videoPlayer.frame = newFrame;
+        }
+
+        public void CloseVideo()
+        {
+            videoPlayer.Stop();
+            EndVideo(videoPlayer);
         }
     }
 }
