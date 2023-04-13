@@ -8,7 +8,7 @@ namespace Managers
         public static readonly UnityEvent OnSceneChange = new();
         public static readonly UnityEvent OnInterruptibleVideoPause = new();
         public static readonly UnityEvent OnInterruptibleVideoResume = new();
-        public static readonly UnityEvent OnVideoCompleted = new();
+        public static readonly UnityEvent OnInterruptibleVideoCompleted = new();
         public static readonly UnityEvent<string> OnInterruptionVideoStart = new();
         public static readonly UnityEvent OnInterruptionVideoCompleted = new();
         public static readonly UnityEvent<QuizInterruptionDescriptor> OnQuizStart = new();

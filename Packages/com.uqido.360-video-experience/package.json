@@ -8,9 +8,6 @@
   "documentationUrl": "https://github.com/Uqido/360-video-experience",
   "changelogUrl": "https://github.com/Uqido/360-video-experience",
   "licensesUrl": "https://github.com/Uqido/360-video-experience",
-  "dependencies": {
-    "com.unity.textmeshpro": "3.0.6"
-  },
   "samples": [
     {
       "displayName": "Descriptors Samples",
@@ -28,5 +25,8 @@
     "name": "Uqido",
     "email": "xr@uqido.com",
     "url": "https://www.uqido.com/"
+  },
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6"
   }
 }

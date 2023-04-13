@@ -1,5 +1,6 @@
 using Descriptors;
 using Managers;
+using UnityEngine;
 using UnityEngine.Video;
 
 namespace Controllers
@@ -8,26 +9,29 @@ namespace Controllers
     {
         public InterruptibleVideoDescriptor interruptibleVideoDescriptor;
 
-        private new void Start()
+        protected override void Start()
         {
             base.Start();
             EventManager.OnInterruptibleVideoResume.AddListener(ResumeVideo);
             EventManager.OnInterruptibleVideoPause.AddListener(PauseVideo);
-            EventManager.OnInterruptionVideoStart.AddListener(InterruptVideo);
             EventManager.OnInterruptionVideoCompleted.AddListener(ResumeVideo);
-            if (interruptibleVideoDescriptor != null)
-                StartVideo(interruptibleVideoDescriptor.video.url);
+        }
+
+        public void StartVideo()
+        {
+            if (interruptibleVideoDescriptor == null)
+            {
+                Debug.LogError("Descriptor is missing!! Unable to start video");
+                return;
+            }
+
+            StartVideo(interruptibleVideoDescriptor.video.url);
         }
 
         public void SetVideoDescriptorAndStart(InterruptibleVideoDescriptor descriptor)
         {
             interruptibleVideoDescriptor = descriptor;
             StartVideo(interruptibleVideoDescriptor.video.url);
-        }
-
-        private void InterruptVideo(string interruptionUrl)
-        {
-            EventManager.OnInterruptibleVideoPause.Invoke();
         }
 
         protected override void VideoPlayerOnPrepareCompleted(VideoPlayer source)
@@ -40,7 +44,7 @@ namespace Controllers
         protected override void EndVideo(VideoPlayer vp)
         {
             base.EndVideo(vp);
-            EventManager.OnVideoCompleted.Invoke();
+            EventManager.OnInterruptibleVideoCompleted.Invoke();
         }
     }
 }

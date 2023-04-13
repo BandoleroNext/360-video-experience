@@ -48,6 +48,9 @@ namespace Controllers
                             $"Quiz interruption {quizInterruption}, pausing 360 video at {_currentVideoPlayer.frame}");
                         EventManager.OnQuizStart.Invoke(quizInterruption);
                         break;
+                    default:
+                        Debug.Log($"Interruption not managed");
+                        break;
                 }
             }
         }
