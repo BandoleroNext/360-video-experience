@@ -9,6 +9,7 @@ namespace Controllers
     {
         public InterruptibleVideoDescriptor interruptibleVideoDescriptor;
 
+        private int _startingInterruption = 0;
         protected override void Start()
         {
             base.Start();
@@ -17,7 +18,7 @@ namespace Controllers
             EventManager.OnInterruptionVideoCompleted.AddListener(ResumeVideo);
         }
 
-        public void StartVideo()
+        public void StartVideo(int startingInterruption = 0)
         {
             if (interruptibleVideoDescriptor == null)
             {
@@ -25,20 +26,21 @@ namespace Controllers
                 return;
             }
 
+            _startingInterruption = startingInterruption;
             StartVideo(interruptibleVideoDescriptor.video.url);
         }
 
-        public void SetVideoDescriptorAndStart(InterruptibleVideoDescriptor descriptor)
+        public void SetVideoDescriptorAndStart(InterruptibleVideoDescriptor descriptor,int startingInterruption = 0)
         {
             interruptibleVideoDescriptor = descriptor;
-            StartVideo(interruptibleVideoDescriptor.video.url);
+            StartVideo(startingInterruption);
         }
 
         protected override void VideoPlayerOnPrepareCompleted(VideoPlayer source)
         {
             base.VideoPlayerOnPrepareCompleted(source);
             var interruptionController = new InterruptionController(interruptibleVideoDescriptor.interruptions, source);
-            StartCoroutine(interruptionController.ManageInterruptions());
+            StartCoroutine(interruptionController.ManageInterruptions(_startingInterruption));
         }
 
         protected override void EndVideo(VideoPlayer vp)

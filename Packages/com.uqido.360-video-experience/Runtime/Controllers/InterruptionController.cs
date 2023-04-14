@@ -30,10 +30,13 @@ namespace Controllers
                     $"Some interruptions with the same percentage were found. Only the last one with the same percentage will be used. Update the percentage to be different");
         }
 
-        public IEnumerator ManageInterruptions()
+        public IEnumerator ManageInterruptions(int startingInterruption = 0)
         {
-            foreach (var key in _interruptions.Keys)
+            if (startingInterruption < 0 || startingInterruption >= _interruptions.Keys.Count)
+                yield break;
+            for (var i = startingInterruption; i < _interruptions.Keys.Count; i++)
             {
+                var key = _interruptions.Keys.ToArray()[i];
                 yield return new WaitUntil(() => _currentVideoPlayer.frame >= key);
                 var interruption = _interruptions[key];
                 switch (interruption)
