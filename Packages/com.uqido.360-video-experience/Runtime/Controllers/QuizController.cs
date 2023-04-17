@@ -32,14 +32,18 @@ namespace Controllers
             _timerValue = timeRemaining;
             _question = Instantiate(quizPrefab,quizContainer.position,Quaternion.identity);
             _question.SetupQuestion(quizDescriptor);
-            if (!isTimed) return;
+            if (!isTimed)
+            {
+                _question.UpdateTimerText(-1);
+                return;
+            }
             _timerIsRunning = true;
         }
 
         private void ContinueVideo(bool isCorrect)
         {
             _timerIsRunning = false;
-            Destroy(_question);
+            Destroy(_question.gameObject);
             Debug.Log(isCorrect ? "Selected right answer" : "Selected wrong answer");
             EventManager.OnInterruptibleVideoResume.Invoke();
         }

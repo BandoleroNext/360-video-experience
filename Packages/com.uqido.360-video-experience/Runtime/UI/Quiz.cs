@@ -60,7 +60,7 @@ namespace UI
 
         public void UpdateTimerText(float timerValue)
         {
-            timerText.text = FloatTimerToString(timerValue);
+            timerText.text = timerValue < 0 ? "" : FloatTimerToString(timerValue);
         }
 
         private void OnDestroy()
