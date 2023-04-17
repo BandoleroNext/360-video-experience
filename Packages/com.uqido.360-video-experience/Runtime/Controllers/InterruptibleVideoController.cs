@@ -10,6 +10,7 @@ namespace Controllers
         public InterruptibleVideoDescriptor interruptibleVideoDescriptor;
 
         private int _startingInterruption = 0;
+
         protected override void Start()
         {
             base.Start();
@@ -22,7 +23,7 @@ namespace Controllers
         {
             if (interruptibleVideoDescriptor == null)
             {
-                Debug.LogError("Descriptor is missing!! Unable to start video");
+                Debug.LogWarning("Descriptor is missing!! Unable to start video");
                 return;
             }
 
@@ -30,7 +31,7 @@ namespace Controllers
             StartVideo(interruptibleVideoDescriptor.video.url);
         }
 
-        public void SetVideoDescriptorAndStart(InterruptibleVideoDescriptor descriptor,int startingInterruption = 0)
+        public void SetVideoDescriptorAndStart(InterruptibleVideoDescriptor descriptor, int startingInterruption = 0)
         {
             interruptibleVideoDescriptor = descriptor;
             StartVideo(startingInterruption);
@@ -39,6 +40,11 @@ namespace Controllers
         protected override void VideoPlayerOnPrepareCompleted(VideoPlayer source)
         {
             base.VideoPlayerOnPrepareCompleted(source);
+            if (interruptibleVideoDescriptor == null)
+            {
+                Debug.LogWarning("Descriptor is missing, skipping interruption");
+                return;
+            }
             var interruptionController = new InterruptionController(interruptibleVideoDescriptor.interruptions, source);
             StartCoroutine(interruptionController.ManageInterruptions(_startingInterruption));
         }
