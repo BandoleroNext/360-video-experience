@@ -10,6 +10,8 @@ namespace UI
 {
     public class Quiz : MonoBehaviour
     {
+        [HideInInspector]
+        public bool answerGiven;
         [SerializeField] private TMP_Text questionText;
         [SerializeField] private TMP_Text timerText;
         [SerializeField] private AnswerButton answerButtonPrefab;
@@ -47,7 +49,7 @@ namespace UI
                     answersTransforms[currentSlot].rotation, answerContainer);
                 currentSlot++;
                 _answerButtons.Add(answerButton);
-                answerButton.Setup(singleAnswer);
+                answerButton.Setup(singleAnswer,this);
             }
         }
 

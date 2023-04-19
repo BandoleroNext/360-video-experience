@@ -12,10 +12,12 @@ namespace UI
         [SerializeField] private AudioClip rightAnswerSound;
         [SerializeField] private AudioClip wrongAnswerSound;
         private Answer _quizAnswer;
+        private Quiz _referenceQuiz;
 
-        public void Setup(Answer quizAnswer)
+        public void Setup(Answer quizAnswer, Quiz referenceQuiz)
         {
             _quizAnswer = quizAnswer;
+            _referenceQuiz = referenceQuiz;
             answerText.text = _quizAnswer.answer;
             audioSource.clip = _quizAnswer.isCorrect
                 ? rightAnswerSound
@@ -24,6 +26,8 @@ namespace UI
 
         public void OnAnswerGiven()
         {
+            if(_referenceQuiz.answerGiven) return;
+            _referenceQuiz.answerGiven = true;
             EventManager.OnAnswerGiven.Invoke(_quizAnswer.isCorrect);
         }
     }
