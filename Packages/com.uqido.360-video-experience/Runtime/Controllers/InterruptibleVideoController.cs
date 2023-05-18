@@ -11,9 +11,8 @@ namespace Controllers
 
         private int _startingInterruption = 0;
 
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
             EventManager.OnInterruptibleVideoResume.AddListener(ResumeVideo);
             EventManager.OnInterruptibleVideoPause.AddListener(PauseVideo);
             EventManager.OnInterruptionVideoCompleted.AddListener(ResumeVideo);

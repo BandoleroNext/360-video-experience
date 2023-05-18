@@ -8,9 +8,8 @@ namespace Controllers
     {
         [SerializeField] private GameObject interruptionContainer;
 
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
             interruptionContainer.SetActive(false);
             EventManager.OnInterruptionVideoStart.AddListener(StartVideo);
         }

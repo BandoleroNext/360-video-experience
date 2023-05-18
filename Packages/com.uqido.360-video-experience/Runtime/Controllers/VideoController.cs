@@ -16,7 +16,7 @@ namespace Controllers
         private RenderTexture _renderTexture;
         protected VideoPlayer videoPlayer;
 
-        protected virtual void Start()
+        protected virtual void Awake()
         {
             videoPlayer = GetComponent<VideoPlayer>();
         }
